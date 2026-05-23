@@ -1,0 +1,232 @@
+/* ════════════════════════════════════════
+   VINTAGE PANINI STICKER CARD
+   ════════════════════════════════════════ */
+
+.sticker-card {
+  background: #FFFCF0;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  box-shadow:
+    0 1px 3px rgba(80,40,0,.18),
+    0 3px 8px rgba(80,40,0,.12),
+    inset 0 0 0 1px rgba(160,112,16,.2);
+  transition: transform .15s, box-shadow .15s;
+  /* Slight paper texture on card */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='150' height='150' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+/* Hover lift — only in album view (not in pack flip) */
+.album-grid .sticker-card:hover,
+.stickers-grid .sticker-card:hover {
+  transform: translateY(-4px) rotate(-0.8deg) scale(1.03);
+  box-shadow:
+    0 6px 18px rgba(80,40,0,.28),
+    inset 0 0 0 1px rgba(160,112,16,.3);
+  z-index: 2;
+}
+
+/* ── RARE GOLD TREATMENT ── */
+.sticker-card.rare {
+  box-shadow:
+    0 0 0 2px #B8860B,
+    0 0 0 3px #F0C040,
+    0 4px 16px rgba(184,134,11,.45);
+  background: linear-gradient(160deg, #FFFDE8 0%, #FFFCF0 100%);
+}
+.sticker-card.rare::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(255, 240, 120, 0.22) 40%,
+    rgba(255, 220, 60, 0.15) 50%,
+    transparent 70%
+  );
+  background-size: 200% 200%;
+  animation: goldShimmer 2.4s ease-in-out infinite;
+  z-index: 3;
+  pointer-events: none;
+  border-radius: 4px;
+}
+@keyframes goldShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── MISSING (not collected) ── */
+.sticker-card.missing {
+  background: #EDE0C4;
+  filter: none;
+  opacity: .85;
+}
+.sticker-card.missing .card-header {
+  opacity: .5;
+}
+.missing-overlay {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent 0px, transparent 7px,
+    rgba(160,112,16,.07) 7px, rgba(160,112,16,.07) 8px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── CARD HEADER BAND ── */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 7px 4px 5px;
+  font-family: 'Oswald', sans-serif;
+  font-size: .55rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  position: relative;
+}
+/* Glossy stripe on header */
+.card-header::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: rgba(255,255,255,.18);
+  pointer-events: none;
+}
+.card-flag { font-size: .85rem; }
+.card-team { flex: 1; line-height: 1; }
+.card-number { opacity: .85; font-size: .6rem; }
+
+/* Duplicate badge */
+.dup-badge {
+  position: absolute;
+  top: -5px; right: -5px;
+  background: #7A1A10;
+  color: #fff;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .65rem;
+  letter-spacing: .5px;
+  padding: 1px 5px;
+  border-radius: 10px;
+  border: 1.5px solid #FFFCF0;
+  z-index: 4;
+}
+
+/* ── PHOTO AREA ── */
+.card-photo-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 78%;   /* portrait ratio */
+  overflow: hidden;
+  background: #DDD0B0;
+}
+.card-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+/* Subtle vignette on photo */
+.card-photo-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,.18) 100%);
+  pointer-events: none;
+}
+.card-initials {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 2px;
+  z-index: 1;
+}
+/* "?" for missing */
+.card-initials-q {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  color: rgba(120,80,20,.35);
+  z-index: 1;
+}
+
+/* ── INFO SECTION ── */
+.card-info {
+  padding: 5px 6px 5px;
+  border-top: 1px solid rgba(160,112,16,.2);
+  background: #FFFCF0;
+}
+.card-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .78rem;
+  letter-spacing: .8px;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 3px;
+}
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: .55rem;
+  color: var(--ink-faded, #8A6030);
+  margin-bottom: 2px;
+}
+.card-pos {
+  background: var(--ink, #1A0C02);
+  color: #FFFCF0;
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: .5rem;
+  letter-spacing: .5px;
+}
+.card-age { font-style: italic; }
+.card-club {
+  font-size: .55rem;
+  color: var(--ink-faded, #8A6030);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+.card-rare-badge {
+  display: inline-block;
+  margin-top: 3px;
+  font-family: 'Oswald', sans-serif;
+  font-size: .55rem;
+  font-weight: 700;
+  color: #A07010;
+  letter-spacing: 1px;
+}
+
+/* ── STICKER NUMBER bottom-right corner ── */
+.card-sticker-num {
+  position: absolute;
+  bottom: 4px;
+  right: 5px;
+  font-family: 'Oswald', sans-serif;
+  font-size: .48rem;
+  color: rgba(80,40,0,.35);
+  z-index: 4;
+}

@@ -1,0 +1,364 @@
+/* ════════════════════════════════════════
+   PACK OPENING — VINTAGE PAPER FEEL
+   ════════════════════════════════════════ */
+
+.pack-view { text-align: center; }
+
+.pack-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 10px 0 30px;
+}
+
+/* ── The Pack graphic ── */
+.pack-wrap {
+  position: relative;
+  width: 220px;
+  height: 320px;
+  perspective: 900px;
+  cursor: pointer;
+}
+
+.pack-body {
+  width: 220px;
+  height: 320px;
+  position: absolute;
+  top: 0; left: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  /* Vintage foil pack look */
+  background:
+    linear-gradient(
+      148deg,
+      #1a0a40 0%,
+      #0d0620 18%,
+      #3a0010 35%,
+      #800020 50%,
+      #3a0010 65%,
+      #0d0620 80%,
+      #1a0a40 100%
+    );
+  box-shadow:
+    0 4px 24px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.12),
+    inset 0 -1px 0 rgba(0,0,0,.4);
+  /* Foil sheen */
+  animation: packSheen 3s ease-in-out infinite;
+}
+
+@keyframes packSheen {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.12) saturate(1.1); }
+}
+
+/* Foil glint stripe */
+.pack-body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      120deg,
+      transparent 0px,
+      transparent 20px,
+      rgba(255,255,255,.035) 20px,
+      rgba(255,255,255,.035) 21px
+    ),
+    linear-gradient(60deg, transparent 35%, rgba(200,160,255,.08) 50%, transparent 65%);
+  background-size: 100% 100%, 200% 200%;
+  animation: foilMove 2.5s ease-in-out infinite alternate;
+}
+@keyframes foilMove {
+  0%   { background-position: 0 0, 0% 0%; }
+  100% { background-position: 0 0, 100% 100%; }
+}
+
+/* Tear-off strip at top */
+.pack-tearstrip {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 52px;
+  background:
+    linear-gradient(148deg, #2a1a60 0%, #1a0440 50%, #2a0010 100%);
+  border-bottom: 2px dashed rgba(255,255,255,.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Oswald', sans-serif;
+  font-size: .55rem;
+  color: rgba(255,255,255,.5);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* Pack content */
+.pack-content {
+  position: absolute;
+  top: 52px; left: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 12px;
+  z-index: 1;
+}
+.pack-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.6rem;
+  color: #F0D060;
+  letter-spacing: 5px;
+  line-height: .9;
+  text-shadow: 0 2px 8px rgba(0,0,0,.6), 0 0 20px rgba(240,208,96,.3);
+}
+.pack-brand small {
+  display: block;
+  font-size: .8rem;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,.7);
+}
+.pack-flags-row {
+  font-size: 1.15rem;
+  letter-spacing: 3px;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,.5));
+}
+.pack-inside-text {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: .6rem;
+  color: rgba(255,255,255,.5);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,.2);
+  padding: 3px 10px;
+  border-radius: 10px;
+}
+
+/* Torn edge divider line */
+.pack-divider {
+  position: absolute;
+  top: 50px;
+  left: -2px; right: -2px;
+  height: 4px;
+  background: rgba(255,255,255,.15);
+}
+
+/* ── RIPPING ANIMATION ── */
+@keyframes packShake {
+  0%   { transform: translate(0,0) rotate(0deg); }
+  10%  { transform: translate(-4px, 1px) rotate(-1.5deg); }
+  20%  { transform: translate(4px, -1px) rotate(1.5deg); }
+  30%  { transform: translate(-3px, 2px) rotate(-1deg); }
+  40%  { transform: translate(5px, -2px) rotate(2deg); }
+  50%  { transform: translate(-4px, 1px) rotate(-1.5deg); }
+  60%  { transform: translate(4px, -1px) rotate(1deg); }
+  70%  { transform: translate(-2px, 2px) rotate(-0.5deg); }
+  80%  { transform: translate(3px, -1px) rotate(1deg); }
+  90%  { transform: translate(-1px, 0) rotate(-0.5deg); }
+  100% { transform: translate(0,0) rotate(0deg); }
+}
+
+.pack-wrap.ripping .pack-body {
+  animation: packShake 0.65s cubic-bezier(.36,.07,.19,.97) forwards, packSheen 3s ease-in-out infinite;
+}
+
+/* The two torn halves — hidden until torn */
+.pack-top-half,
+.pack-bot-half {
+  position: absolute;
+  left: -2px; right: -2px;
+  overflow: hidden;
+  display: none;
+  border-radius: 8px;
+}
+.pack-top-half {
+  top: -2px;
+  height: 54px; /* tear point */
+  background: linear-gradient(148deg, #2a1a60 0%, #1a0440 50%, #2a0010 100%);
+  /* Irregular bottom torn edge */
+  clip-path: polygon(
+    0% 0%, 100% 0%,
+    100% 80%,
+    96% 88%, 92% 78%, 88% 92%, 84% 80%, 80% 90%,
+    76% 78%, 72% 92%, 68% 80%, 64% 88%, 60% 76%,
+    56% 90%, 52% 80%, 48% 92%, 44% 78%, 40% 90%,
+    36% 80%, 32% 88%, 28% 76%, 24% 90%, 20% 80%,
+    16% 88%, 12% 78%, 8% 92%, 4% 80%, 0% 88%
+  );
+}
+.pack-bot-half {
+  top: 50px;
+  bottom: -2px;
+  background: linear-gradient(148deg, #3a0010 0%, #800020 40%, #3a0010 70%, #1a0a40 100%);
+  /* Irregular top torn edge matching bottom half */
+  clip-path: polygon(
+    0% 12%,
+    4% 20%, 8% 8%, 12% 22%, 16% 12%,
+    20% 20%, 24% 10%, 28% 24%, 32% 12%,
+    36% 20%, 40% 10%, 44% 22%, 48% 8%,
+    52% 20%, 56% 10%, 60% 24%, 64% 12%,
+    68% 20%, 72% 8%, 76% 22%, 80% 10%,
+    84% 20%, 88% 8%, 92% 22%, 96% 12%,
+    100% 20%,
+    100% 100%, 0% 100%
+  );
+}
+
+@keyframes tearTopFly {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+  20%  { transform: translateY(-12px) rotate(-2deg); opacity: 1; }
+  100% { transform: translateY(-220px) rotate(-18deg); opacity: 0; }
+}
+@keyframes tearBotFly {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+  20%  { transform: translateY(8px) rotate(1deg); opacity: 1; }
+  100% { transform: translateY(180px) rotate(12deg); opacity: 0; }
+}
+
+.pack-wrap.torn .pack-body { display: none; }
+.pack-wrap.torn .pack-top-half {
+  display: block;
+  animation: tearTopFly 0.7s cubic-bezier(.4,0,.2,1) forwards;
+}
+.pack-wrap.torn .pack-bot-half {
+  display: block;
+  animation: tearBotFly 0.7s cubic-bezier(.4,0,.2,1) 0.05s forwards;
+}
+
+/* ── Open button ── */
+.pack-open-btn { font-size: 1.2rem; padding: 14px 40px; }
+
+/* ── Cards row after opening ── */
+.pack-cards-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  max-width: 1000px;
+}
+
+/* ── Flip card ── */
+.flip-card {
+  width: 148px;
+  height: 228px;
+  perspective: 900px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(-60px) scale(.9);
+  transition: opacity .45s ease, transform .45s ease;
+  position: relative;
+}
+
+.flip-card::after {
+  content: 'tap to reveal';
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Oswald', sans-serif;
+  font-size: .55rem;
+  color: var(--ink-faded, #8A6030);
+  letter-spacing: 1px;
+  opacity: 0;
+  transition: opacity .3s;
+  white-space: nowrap;
+}
+.flip-card:not(.flipped):hover::after { opacity: 1; }
+
+.pack-cards-row.visible .flip-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.flip-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform .55s cubic-bezier(.4,0,.2,1);
+}
+.flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+
+.flip-back, .flip-front {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* Vintage card back */
+.flip-back {
+  background:
+    linear-gradient(148deg,
+      #1a0a40 0%, #0d0620 20%, #3a0010 40%,
+      #800020 55%, #3a0010 70%, #1a0a40 100%
+    );
+  border: 2px solid rgba(240,208,96,.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.35);
+}
+.flip-back::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(240,208,96,.2);
+  border-radius: 3px;
+}
+.flip-back-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  color: #F0D060;
+  letter-spacing: 4px;
+  line-height: 1;
+  text-shadow: 0 0 12px rgba(240,208,96,.4);
+  position: relative;
+  z-index: 1;
+}
+.flip-back-logo small {
+  display: block;
+  font-size: .55rem;
+  color: rgba(255,255,255,.6);
+  letter-spacing: 2px;
+}
+.flip-back-flags {
+  font-size: .9rem;
+  letter-spacing: 2px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Pulse hint on unflipped cards */
+.flip-card:not(.flipped) .flip-back {
+  animation: cardPulse 2s ease-in-out infinite;
+}
+@keyframes cardPulse {
+  0%, 100% { box-shadow: 0 4px 14px rgba(0,0,0,.35), 0 0 0 0 rgba(240,208,96,0); }
+  50%       { box-shadow: 0 4px 14px rgba(0,0,0,.35), 0 0 0 6px rgba(240,208,96,.2); }
+}
+
+.flip-front { transform: rotateY(180deg); }
+.flip-front .sticker-card { width: 100%; height: 100%; border-radius: 0; }
+
+/* ── Add to collection ── */
+.pack-add-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+.pack-add-wrap .btn { font-size: 1.1rem; padding: 14px 36px; }
+.pack-result-label {
+  font-family: 'Oswald', sans-serif;
+  font-size: .8rem;
+  color: var(--ink-faded, #8A6030);
+  letter-spacing: 1px;
+  font-style: italic;
+}

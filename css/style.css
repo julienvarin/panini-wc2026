@@ -1,0 +1,392 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600;700&family=Roboto+Condensed:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+a { text-decoration: none; color: inherit; }
+
+/* ── Paper Variables ── */
+:root {
+  --paper-1:     #F4E8CA;   /* base warm paper */
+  --paper-2:     #EBD9A8;   /* slightly aged */
+  --paper-3:     #D9C27E;   /* darker crease */
+  --paper-edge:  #C8A95A;   /* worn gold-brown edge */
+  --ink:         #1A0C02;
+  --ink-mid:     #4A280A;
+  --ink-faded:   #8A6030;
+  --gold-old:    #A07010;
+  --gold-shine:  #C89020;
+  --stamp-red:   #7A1A10;
+  --stamp-blue:  #0A2060;
+  --shadow-warm: rgba(80,40,0,.22);
+  --r: 6px;
+}
+
+/* ── Body: aged paper look ── */
+html { scroll-behavior: smooth; }
+body {
+  min-height: 100vh;
+  background-color: var(--paper-1);
+  background-image:
+    /* fine noise grain */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E"),
+    /* subtle horizontal lines like old paper */
+    repeating-linear-gradient(
+      180deg,
+      transparent 0px,
+      transparent 30px,
+      rgba(160,112,16,.04) 30px,
+      rgba(160,112,16,.04) 31px
+    );
+  font-family: 'Roboto Condensed', sans-serif;
+  color: var(--ink);
+  font-size: 15px;
+}
+
+/* ── App wrapper ── */
+#app {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 16px 14px 80px;
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 28px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.15rem;
+  letter-spacing: 2px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: transform .12s, box-shadow .12s, filter .12s;
+  position: relative;
+}
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 -3px 0 rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.18);
+}
+.btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+.btn-primary  { background: #A07010; color: #FFF8E8; box-shadow: 2px 3px 8px var(--shadow-warm); }
+.btn-secondary { background: var(--ink); color: var(--paper-1); box-shadow: 2px 3px 8px var(--shadow-warm); }
+.btn-ghost {
+  background: transparent;
+  border: 2px solid var(--paper-edge);
+  color: var(--ink-mid);
+  font-family: 'Oswald', sans-serif;
+  font-size: .85rem;
+  letter-spacing: 1px;
+  padding: 7px 14px;
+}
+.btn-ghost:hover { background: var(--paper-2); }
+
+/* ── View header ── */
+.view-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 14px;
+  margin-bottom: 26px;
+  border-bottom: 3px double var(--paper-edge);
+  flex-wrap: wrap;
+}
+.view-header h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 3px;
+  flex: 1;
+  line-height: 1;
+}
+.view-sub { font-size: .85rem; color: var(--ink-faded); font-style: italic; }
+
+/* ── HOME ── */
+.home-view { text-align: center; padding-top: 8px; }
+
+/* Vintage Panini album cover feel */
+.home-logo {
+  padding: 32px 20px 28px;
+  background: var(--paper-2);
+  border: 3px solid var(--paper-edge);
+  border-radius: 4px;
+  margin-bottom: 24px;
+  position: relative;
+  box-shadow: inset 0 0 40px rgba(160,112,16,.12), 3px 4px 0 var(--paper-edge);
+}
+.home-logo::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(160,112,16,.3);
+  border-radius: 2px;
+  pointer-events: none;
+}
+.logo-edition {
+  display: inline-block;
+  font-family: 'Oswald', sans-serif;
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: 5px;
+  color: var(--ink-faded);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  border-top: 1px solid var(--paper-edge);
+  border-bottom: 1px solid var(--paper-edge);
+  padding: 3px 16px;
+}
+.logo-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.6rem, 8vw, 5rem);
+  letter-spacing: 4px;
+  line-height: .95;
+  color: var(--ink);
+  text-shadow: 3px 3px 0 rgba(160,112,16,.25);
+}
+.logo-year {
+  display: block;
+  font-size: clamp(4rem, 14vw, 8.5rem);
+  color: var(--gold-old);
+  line-height: .9;
+  letter-spacing: 6px;
+}
+.logo-sub {
+  font-family: 'Oswald', sans-serif;
+  font-size: .8rem;
+  letter-spacing: 4px;
+  color: var(--ink-faded);
+  margin-top: 12px;
+  text-transform: uppercase;
+}
+
+/* Decorative corner stamp */
+.corner-stamp {
+  position: absolute;
+  top: 10px; right: 12px;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: var(--stamp-red);
+  color: #fff;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .55rem;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.1;
+  border: 2px solid rgba(255,255,255,.3);
+  transform: rotate(12deg);
+}
+
+/* Stats */
+.stats-strip {
+  display: flex;
+  border: 2px solid var(--paper-edge);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  background: var(--paper-2);
+  box-shadow: 2px 3px 0 var(--paper-edge);
+}
+.stat-cell {
+  flex: 1;
+  padding: 14px 8px 10px;
+  border-right: 1px solid var(--paper-edge);
+  text-align: center;
+}
+.stat-cell:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.9rem;
+  line-height: 1;
+  color: var(--ink);
+}
+.stat-num small { font-size: 1rem; color: var(--ink-faded); }
+.stat-lbl {
+  font-size: .62rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-faded);
+  margin-top: 3px;
+}
+
+/* Progress ruler */
+.ruler-wrap {
+  height: 20px;
+  background: var(--paper-2);
+  border: 1.5px solid var(--paper-edge);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 22px;
+  position: relative;
+}
+.ruler-fill {
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--gold-old) 0px,
+    var(--gold-old) 8px,
+    var(--gold-shine) 8px,
+    var(--gold-shine) 10px
+  );
+  transition: width .8s ease;
+  position: relative;
+}
+.ruler-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,.25) 0%, transparent 60%);
+}
+.ruler-label {
+  position: absolute;
+  right: 6px; top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Oswald', sans-serif;
+  font-size: .65rem;
+  font-weight: 700;
+  color: var(--ink-faded);
+}
+
+/* Action buttons */
+.home-actions { display: flex; gap: 12px; justify-content: center; margin-bottom: 28px; flex-wrap: wrap; }
+
+/* Team mini-cards on home */
+.home-teams {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+}
+.mini-nation {
+  background: var(--paper-2);
+  border: 1.5px solid var(--paper-edge);
+  border-radius: 3px;
+  padding: 10px 8px 8px;
+  text-align: center;
+  transition: transform .12s, box-shadow .12s;
+  box-shadow: 2px 2px 0 var(--paper-edge);
+  cursor: pointer;
+}
+.mini-nation:hover { transform: translateY(-3px) rotate(-0.5deg); box-shadow: 3px 5px 0 var(--paper-edge); }
+.mini-flag-lg { font-size: 2rem; display: block; margin-bottom: 4px; }
+.mini-nation-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .85rem;
+  letter-spacing: 1.5px;
+  display: block;
+}
+.mini-nation-pct {
+  font-size: .65rem;
+  color: var(--ink-faded);
+  font-style: italic;
+}
+.mini-nation-bar {
+  height: 3px;
+  background: var(--paper-3);
+  margin: 5px 0 2px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.mini-nation-fill { height: 100%; background: var(--gold-old); border-radius: 2px; }
+
+/* ── ALBUM COLLECTION VIEW ── */
+.collection-view {}
+
+/* Team album section */
+.album-section { margin-bottom: 38px; }
+
+.album-section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--paper-2);
+  border-top: 4px solid var(--section-color, #888);
+  border-bottom: 3px double var(--paper-edge);
+  margin-bottom: 16px;
+  position: relative;
+}
+.album-section-flag { font-size: 1.8rem; flex-shrink: 0; }
+.album-section-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 4px;
+  flex: 1;
+  line-height: 1;
+}
+.album-section-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  flex-shrink: 0;
+}
+.album-section-count {
+  font-family: 'Oswald', sans-serif;
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--ink-mid);
+}
+.album-section-bar {
+  width: 120px;
+  height: 8px;
+  background: var(--paper-3);
+  border-radius: 2px;
+  border: 1px solid var(--paper-edge);
+  overflow: hidden;
+}
+.album-section-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--section-color, var(--gold-old));
+  transition: width .6s;
+}
+.album-section-pct {
+  font-size: .62rem;
+  color: var(--ink-faded);
+  font-style: italic;
+}
+
+/* Album sticker grid */
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
+  padding: 0 2px;
+}
+
+/* ── Scrollspy nav (floating) ── */
+.album-nav {
+  position: fixed;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 100;
+}
+.album-nav-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--paper-2);
+  border: 2px solid var(--paper-edge);
+  font-size: .9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform .12s, box-shadow .12s;
+  box-shadow: 1px 1px 0 var(--paper-edge);
+  text-decoration: none;
+}
+.album-nav-dot:hover { transform: scale(1.2); box-shadow: 2px 2px 4px var(--shadow-warm); }
