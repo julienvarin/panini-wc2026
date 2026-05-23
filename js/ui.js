@@ -12,13 +12,13 @@ function initials(p) {
 
 const POS_LABEL = { GK:'GK', CB:'CB', RB:'RB', LB:'LB', CDM:'CDM', CM:'CM', CAM:'CAM', RW:'RW', LW:'LW', ST:'ST' };
 
-// Circle flag image (replaces emoji everywhere)
+// Circle flag image — flagcdn only accepts: 20, 40, 80, 160, 320
 function flagCircle(teamId, size = 'md') {
   const team = TEAMS[teamId];
   if (!team || !team.flagCode) return '';
-  const px = size === 'sm' ? 18 : size === 'lg' ? 32 : 22;
+  const cdnW = size === 'lg' ? 80 : 40;
   return `<img class="flag-circle flag-circle--${size}"
-               src="https://flagcdn.com/w${px * 2}/${team.flagCode}.png"
+               src="https://flagcdn.com/w${cdnW}/${team.flagCode}.png"
                alt="${team.name}"
                onerror="this.style.opacity=0">`;
 }
