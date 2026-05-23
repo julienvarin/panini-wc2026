@@ -112,7 +112,7 @@
 .card-photo-wrap {
   position: relative;
   width: 100%;
-  padding-top: 78%;
+  padding-top: 100%;
   overflow: hidden;
   background: #E4E4E4;
 }
@@ -138,11 +138,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 2.2rem;
-  font-weight: 900;
-  letter-spacing: 2px;
   z-index: 1;
+}
+.card-silhouette {
+  width: 58%;
+  opacity: .38;
 }
 .card-initials-q {
   position: absolute;
@@ -159,20 +159,20 @@
 
 /* ── INFO SECTION ── */
 .card-info {
-  padding: 5px 6px 5px;
+  padding: 3px 6px 3px;
   border-top: 2px solid #0A0A0A;
   background: #fff;
 }
 .card-name {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: .9rem;
+  font-size: .78rem;
   font-weight: 900;
   letter-spacing: .5px;
   line-height: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-bottom: 3px;
+  margin-bottom: 2px;
   text-transform: uppercase;
   color: #0A0A0A;
 }
