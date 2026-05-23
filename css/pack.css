@@ -36,27 +36,17 @@
   50%       { box-shadow: 8px 8px 0 var(--red, #E8000D); }
 }
 
-/* Diagonal red block top-right */
+/* Diagonal corners via gradients — no transform needed */
 .pack-body::before {
   content: '';
   position: absolute;
-  top: -50px; right: -50px;
-  width: 160px; height: 160px;
-  background: var(--red, #E8000D);
-  transform: rotate(45deg);
+  inset: 0;
+  background:
+    linear-gradient(225deg, var(--red, #E8000D) 0%, var(--red, #E8000D) 38%, transparent 38%),
+    linear-gradient(45deg,  rgba(0,61,245,.8)   0%, rgba(0,61,245,.8)  38%, transparent 38%);
   z-index: 0;
 }
-/* Cobalt block bottom-left */
-.pack-body::after {
-  content: '';
-  position: absolute;
-  bottom: -60px; left: -60px;
-  width: 200px; height: 200px;
-  background: var(--blue, #003DF5);
-  transform: rotate(45deg);
-  z-index: 0;
-  opacity: .75;
-}
+.pack-body::after { display: none; }
 
 /* Tear-off strip */
 .pack-tearstrip {
@@ -254,9 +244,13 @@
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
   transition: transform .55s cubic-bezier(.4,0,.2,1);
 }
-.flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+.flip-card.flipped .flip-inner {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+}
 
 .flip-back, .flip-front {
   position: absolute;
@@ -266,9 +260,14 @@
   overflow: hidden;
 }
 
-/* Bold Swiss card back */
+/* Bold Swiss card back — diagonal design via gradients, NO transforms (transforms on
+   children break backface-visibility on mobile Safari) */
 .flip-back {
-  background: #0A0A0A;
+  /* Red triangle top-right, cobalt triangle bottom-left, black body */
+  background:
+    linear-gradient(225deg, var(--red, #E8000D) 0%, var(--red, #E8000D) 30%, transparent 30%),
+    linear-gradient(45deg,  rgba(0,61,245,.75)   0%, rgba(0,61,245,.75)  30%, transparent 30%),
+    #0A0A0A;
   border: 3px solid #0A0A0A;
   box-shadow: 4px 4px 0 var(--red, #E8000D);
   display: flex;
@@ -276,29 +275,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  position: relative;
   overflow: hidden;
-}
-/* Red diagonal top-right corner */
-.flip-back::before {
-  content: '';
-  position: absolute;
-  top: -30px; right: -30px;
-  width: 100px; height: 100px;
-  background: var(--red, #E8000D);
-  transform: rotate(45deg);
-  z-index: 0;
-}
-/* Cobalt diagonal bottom-left corner */
-.flip-back::after {
-  content: '';
-  position: absolute;
-  bottom: -40px; left: -40px;
-  width: 120px; height: 120px;
-  background: var(--blue, #003DF5);
-  transform: rotate(45deg);
-  opacity: .7;
-  z-index: 0;
 }
 .flip-back-logo {
   font-family: 'Barlow Condensed', sans-serif;
