@@ -57,3 +57,22 @@ function resetCollection() {
   localStorage.removeItem(COLLECTION_KEY);
   localStorage.removeItem(META_KEY);
 }
+
+function getTotalRareCount() {
+  const col = getCollection();
+  return ALL_PLAYERS.filter(p => p.isRare && (col[p.id] || 0) > 0).length;
+}
+
+// ── Lineup (4-2-3-1) ─────────────────────────────────────────────────────────
+const LINEUP_KEY = 'panini_lineup';
+
+function getLineup() {
+  try { return JSON.parse(localStorage.getItem(LINEUP_KEY)) || {}; }
+  catch { return {}; }
+}
+function saveLineup(lineup) {
+  localStorage.setItem(LINEUP_KEY, JSON.stringify(lineup));
+}
+function clearLineup() {
+  localStorage.removeItem(LINEUP_KEY);
+}

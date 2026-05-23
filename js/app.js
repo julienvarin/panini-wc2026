@@ -1,6 +1,5 @@
 function route() {
   const raw  = window.location.hash || '#home';
-  // Support #collection#teamId for direct scroll-to
   const hash = raw.startsWith('#collection#') ? '#collection' : raw;
   const teamScroll = raw.startsWith('#collection#') ? raw.replace('#collection#', '') : null;
 
@@ -10,6 +9,10 @@ function route() {
     renderCollection(teamScroll);
   } else if (hash === '#pack') {
     renderPack();
+  } else if (hash === '#lineup') {
+    renderLineup();
+  } else if (hash === '#gallery') {
+    renderGallery();
   } else {
     renderHome();
   }

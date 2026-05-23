@@ -1,6 +1,6 @@
 const TEAMS = {
   brazil: {
-    name: "Brazil", flag: "🇧🇷", color: "#009c3b", accent: "#ffdf00", textColor: "#fff",
+    name: "Brazil", flag: "🇧🇷", flagCode: "br", color: "#009c3b", accent: "#ffdf00", textColor: "#fff",
     players: [
       { id: 1,  number: 1,  firstName: "Alisson",    lastName: "Becker",      age: 33, club: "Liverpool",       position: "GK",  isRare: false, tmId: 105470 },
       { id: 2,  number: 2,  firstName: "Ederson",    lastName: "",            age: 32, club: "Fenerbahce",      position: "GK",  isRare: false, tmId: 238223 },
@@ -32,7 +32,7 @@ const TEAMS = {
   },
 
   argentina: {
-    name: "Argentina", flag: "🇦🇷", color: "#74acdf", accent: "#fff", textColor: "#43a1db",
+    name: "Argentina", flag: "🇦🇷", flagCode: "ar", color: "#74acdf", accent: "#fff", textColor: "#43a1db",
     players: [
       { id: 27, number: 1,  firstName: "Emiliano",   lastName: "Martínez",    age: 33, club: "Aston Villa",     position: "GK",  isRare: true,  tmId: 170603 },
       { id: 28, number: 2,  firstName: "Geronimo",   lastName: "Rulli",       age: 34, club: "Marseille",       position: "GK",  isRare: false, tmId: 178282 },
@@ -64,7 +64,7 @@ const TEAMS = {
   },
 
   france: {
-    name: "France", flag: "🇫🇷", color: "#002395", accent: "#ed2939", textColor: "#fff",
+    name: "France", flag: "🇫🇷", flagCode: "fr", color: "#002395", accent: "#ed2939", textColor: "#fff",
     players: [
       { id: 53, number: 1,  firstName: "Mike",       lastName: "Maignan",     age: 30, club: "AC Milan",        position: "GK",  isRare: true,  tmId: 200512 },
       { id: 54, number: 2,  firstName: "Brice",      lastName: "Samba",       age: 32, club: "Rennes",          position: "GK",  isRare: false, tmId: 202906 },
@@ -96,7 +96,7 @@ const TEAMS = {
   },
 
   england: {
-    name: "England", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", color: "#012169", accent: "#c8102e", textColor: "#fff",
+    name: "England", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", flagCode: "gb-eng", color: "#012169", accent: "#c8102e", textColor: "#fff",
     players: [
       { id: 79,  number: 1,  firstName: "Jordan",    lastName: "Pickford",    age: 32, club: "Everton",         position: "GK",  isRare: false, tmId: 148455 },
       { id: 80,  number: 2,  firstName: "Dean",      lastName: "Henderson",   age: 29, club: "Crystal Palace",  position: "GK",  isRare: false, tmId: 205607 },
@@ -128,7 +128,7 @@ const TEAMS = {
   },
 
   spain: {
-    name: "Spain", flag: "🇪🇸", color: "#c60b1e", accent: "#ffc400", textColor: "#fff",
+    name: "Spain", flag: "🇪🇸", flagCode: "es", color: "#c60b1e", accent: "#ffc400", textColor: "#fff",
     players: [
       { id: 105, number: 1,  firstName: "Unai",      lastName: "Simón",       age: 29, club: "Athletic Club",   position: "GK",  isRare: false, tmId: 320043 },
       { id: 106, number: 2,  firstName: "David",     lastName: "Raya",        age: 30, club: "Arsenal",         position: "GK",  isRare: false, tmId: 200491 },
@@ -160,7 +160,7 @@ const TEAMS = {
   },
 
   germany: {
-    name: "Germany", flag: "🇩🇪", color: "#000000", accent: "#dd0000", textColor: "#fff",
+    name: "Germany", flag: "🇩🇪", flagCode: "de", color: "#000000", accent: "#dd0000", textColor: "#fff",
     players: [
       { id: 131, number: 1,  firstName: "Manuel",    lastName: "Neuer",       age: 40, club: "Bayern Munich",   position: "GK",  isRare: true,  tmId: 17259  },
       { id: 132, number: 2,  firstName: "Alexander", lastName: "Nübel",       age: 29, club: "Stuttgart",       position: "GK",  isRare: false, tmId: 351619 },
@@ -192,7 +192,7 @@ const TEAMS = {
   },
 
   portugal: {
-    name: "Portugal", flag: "🇵🇹", color: "#006600", accent: "#ff0000", textColor: "#fff",
+    name: "Portugal", flag: "🇵🇹", flagCode: "pt", color: "#006600", accent: "#ff0000", textColor: "#fff",
     players: [
       { id: 157, number: 1,  firstName: "Diogo",     lastName: "Costa",       age: 26, club: "Porto",           position: "GK",  isRare: false, tmId: 428003 },
       { id: 158, number: 2,  firstName: "Rui",       lastName: "Silva",       age: 31, club: "Sporting CP",     position: "GK",  isRare: false, tmId: 246464 },
@@ -224,7 +224,7 @@ const TEAMS = {
   },
 
   netherlands: {
-    name: "Netherlands", flag: "🇳🇱", color: "#ff6600", accent: "#003882", textColor: "#fff",
+    name: "Netherlands", flag: "🇳🇱", flagCode: "nl", color: "#ff6600", accent: "#003882", textColor: "#fff",
     players: [
       { id: 183, number: 1,  firstName: "Bart",      lastName: "Verbruggen",  age: 23, club: "Brighton",        position: "GK",  isRare: false, tmId: 726304 },
       { id: 184, number: 2,  firstName: "Mark",      lastName: "Flekken",     age: 32, club: "Brentford",       position: "GK",  isRare: false, tmId: 160644 },

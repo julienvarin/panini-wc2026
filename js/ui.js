@@ -12,9 +12,18 @@ function initials(p) {
 
 const POS_LABEL = { GK:'GK', CB:'CB', RB:'RB', LB:'LB', CDM:'CDM', CM:'CM', CAM:'CAM', RW:'RW', LW:'LW', ST:'ST' };
 
+// Circle flag image (replaces emoji everywhere)
+function flagCircle(teamId, size = 'md') {
+  const team = TEAMS[teamId];
+  if (!team || !team.flagCode) return '';
+  const px = size === 'sm' ? 18 : size === 'lg' ? 32 : 22;
+  return `<img class="flag-circle flag-circle--${size}"
+               src="https://flagcdn.com/w${px * 2}/${team.flagCode}.png"
+               alt="${team.name}"
+               onerror="this.style.opacity=0">`;
+}
+
 // ── Sticker Card HTML ────────────────────────────────────────────────────────
-// reveal=true → always show player info (pack reveal)
-// reveal=false → hide if not collected (collection view)
 function stickerCardHTML(player, owned, reveal = false, pulledAsRare = false) {
   const count   = owned !== undefined ? owned : getCount(player.id);
   const team    = TEAMS[player.teamId];
@@ -23,29 +32,29 @@ function stickerCardHTML(player, owned, reveal = false, pulledAsRare = false) {
   const fullName = [player.firstName, player.lastName].filter(Boolean).join(' ');
   const ini      = initials(player);
 
-  const rareClass  = isRare ? 'rare' : '';
-  const missClass  = !show ? 'missing' : '';
-  const dupBadge   = count > 1 ? `<span class="dup-badge">×${count}</span>` : '';
-  const rareBadge  = isRare ? `<span class="card-rare-badge">★ RARE</span>` : '';
+  const rareClass = isRare ? 'rare' : '';
+  const missClass = !show ? 'missing' : '';
+  const dupBadge  = count > 1 ? `<span class="dup-badge">×${count}</span>` : '';
+  const rareBadge = isRare ? `<span class="card-rare-badge">★ RARE</span>` : '';
 
   const photoHTML = show ? `
     <img class="card-photo" src="${photoUrl(player.id)}"
          alt="${fullName}"
          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-    <div class="card-initials" style="background:${team.color};color:${team.accent};display:none">${ini}</div>
+    <div class="card-initials" style="background:${team.color};color:#fff;display:none">${ini}</div>
   ` : `
     <div class="card-initials-q">?</div>
   `;
 
   return `
     <div class="sticker-card ${rareClass} ${missClass}" data-id="${player.id}">
-      <div class="card-header" style="background:${team.color};color:${team.textColor}">
-        <span class="card-flag">${team.flag}</span>
+      <div class="card-header" style="background:${team.color}">
+        ${flagCircle(player.teamId, 'sm')}
         <span class="card-team">${team.name.toUpperCase()}</span>
         <span class="card-number">#${String(player.number).padStart(2,'0')}</span>
         ${dupBadge}
       </div>
-      <div class="card-photo-wrap" style="${!show ? 'background:#D4C4A0;' : ''}">
+      <div class="card-photo-wrap">
         ${photoHTML}
         ${!show ? '<div class="missing-overlay"></div>' : ''}
       </div>
@@ -66,23 +75,28 @@ function stickerCardHTML(player, owned, reveal = false, pulledAsRare = false) {
 
 // ─── HOME ────────────────────────────────────────────────────────────────────
 
+function handleClearCollection() {
+  if (!confirm('Reset your entire collection? This cannot be undone.')) return;
+  resetCollection();
+  clearLineup();
+  renderHome();
+}
+
 function renderHome() {
   const unique = getTotalUnique();
   const packs  = getPacksOpened();
   const dups   = getTotalDuplicates();
+  const rare   = getTotalRareCount();
   const pct    = Math.round((unique / TOTAL_STICKERS) * 100);
 
   document.getElementById('app').innerHTML = `
     <div class="home-view">
 
       <div class="home-logo">
-        <div class="corner-stamp">FIFA<br>WC<br>2026</div>
-        <div class="logo-edition">Official Sticker Collection</div>
         <div class="logo-title">
           FIFA WORLD CUP
           <span class="logo-year">2026</span>
         </div>
-        <div class="logo-sub">Complete your album · ${TOTAL_STICKERS} stickers</div>
       </div>
 
       <div class="stats-strip">
@@ -91,16 +105,16 @@ function renderHome() {
           <div class="stat-lbl">Stickers</div>
         </div>
         <div class="stat-cell">
-          <div class="stat-num">${pct}<small>%</small></div>
-          <div class="stat-lbl">Complete</div>
+          <div class="stat-num stat-gold">${rare}</div>
+          <div class="stat-lbl">Rare Cards</div>
         </div>
-        <div class="stat-cell">
+        <div class="stat-cell stat-red">
           <div class="stat-num">${packs}</div>
-          <div class="stat-lbl">Packs</div>
+          <div class="stat-lbl">Packs Opened</div>
         </div>
         <div class="stat-cell">
           <div class="stat-num">${dups}</div>
-          <div class="stat-lbl">Dupes</div>
+          <div class="stat-lbl">Duplicates</div>
         </div>
       </div>
 
@@ -112,14 +126,19 @@ function renderHome() {
       <div class="home-actions">
         <a href="#collection" class="btn btn-secondary">📖 My Album</a>
         <a href="#pack"       class="btn btn-primary">🎴 Open a Pack</a>
+        <a href="#lineup"     class="btn btn-secondary">⚽ Starting 11</a>
+      </div>
+
+      <div class="home-meta">
+        <button class="btn btn-ghost btn-clear" onclick="handleClearCollection()">Reset Collection</button>
       </div>
 
       <div class="home-teams">
         ${Object.entries(TEAMS).map(([id, t]) => {
           const teamUnique = t.players.filter(p => getCount(p.id) > 0).length;
           const tPct = Math.round((teamUnique / t.players.length) * 100);
-          return `<a href="#collection#${id}" class="mini-nation" style="border-color:${t.color}">
-            <span class="mini-flag-lg">${t.flag}</span>
+          return `<a href="#collection#${id}" class="mini-nation" style="--section-color:${t.color}">
+            ${flagCircle(id, 'lg')}
             <span class="mini-nation-name">${t.name}</span>
             <div class="mini-nation-bar"><div class="mini-nation-fill" style="width:${tPct}%;background:${t.color}"></div></div>
             <span class="mini-nation-pct">${teamUnique}/${t.players.length} · ${tPct}%</span>
@@ -130,7 +149,7 @@ function renderHome() {
     </div>`;
 }
 
-// ─── ALBUM COLLECTION (all teams, one page) ──────────────────────────────────
+// ─── ALBUM COLLECTION ────────────────────────────────────────────────────────
 
 function renderCollection(scrollToTeam) {
   const totalUnique = getTotalUnique();
@@ -143,7 +162,7 @@ function renderCollection(scrollToTeam) {
     return `
       <div class="album-section" id="section-${teamId}" style="--section-color:${team.color}">
         <div class="album-section-header">
-          <span class="album-section-flag">${team.flag}</span>
+          ${flagCircle(teamId, 'lg')}
           <span class="album-section-name">${team.name.toUpperCase()}</span>
           <div class="album-section-progress">
             <span class="album-section-count">${owned} / ${team.players.length}</span>
@@ -159,13 +178,13 @@ function renderCollection(scrollToTeam) {
       </div>`;
   }).join('');
 
-  // Floating nation nav
   const navHTML = `
     <nav class="album-nav" aria-label="Jump to country">
       ${Object.entries(TEAMS).map(([id, t]) => `
         <a class="album-nav-dot" href="#" title="${t.name}"
+           style="--section-color:${t.color}"
            onclick="event.preventDefault();document.getElementById('section-${id}').scrollIntoView({behavior:'smooth'})"
-        >${t.flag}</a>`).join('')}
+        >${flagCircle(id, 'sm')}</a>`).join('')}
     </nav>`;
 
   document.getElementById('app').innerHTML = `
@@ -173,19 +192,191 @@ function renderCollection(scrollToTeam) {
       <div class="view-header">
         <a href="#home" class="btn btn-ghost">← Back</a>
         <h2>📖 My Album</h2>
-        <div class="view-sub">${totalUnique} / ${TOTAL_STICKERS} stickers collected</div>
+        <div class="view-sub">${totalUnique} / ${TOTAL_STICKERS} collected</div>
+        <a href="#gallery" class="btn btn-ghost">Show All Cards</a>
       </div>
       ${sectionsHTML}
     </div>
     ${navHTML}`;
 
-  // Scroll to specific team if requested (from home quick-link)
   if (scrollToTeam) {
     requestAnimationFrame(() => {
       const el = document.getElementById(`section-${scrollToTeam}`);
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     });
   }
+}
+
+// ─── GALLERY (all cards, always revealed — for QA) ───────────────────────────
+
+function renderGallery() {
+  const sectionsHTML = Object.entries(TEAMS).map(([teamId, team]) => `
+    <div class="album-section" id="gsection-${teamId}" style="--section-color:${team.color}">
+      <div class="album-section-header">
+        ${flagCircle(teamId, 'lg')}
+        <span class="album-section-name">${team.name.toUpperCase()}</span>
+        <span class="album-section-pct" style="margin-left:auto">All ${team.players.length} players</span>
+      </div>
+      <div class="album-grid">
+        ${team.players.map(p => stickerCardHTML({...p, teamId}, getCount(p.id), true)).join('')}
+      </div>
+    </div>`).join('');
+
+  document.getElementById('app').innerHTML = `
+    <div class="collection-view">
+      <div class="view-header">
+        <a href="#collection" class="btn btn-ghost">← Back</a>
+        <h2>All Cards</h2>
+        <div class="view-sub">${TOTAL_STICKERS} stickers · photos QA</div>
+      </div>
+      ${sectionsHTML}
+    </div>`;
+}
+
+// ─── STARTING 11 — 4-2-3-1 ──────────────────────────────────────────────────
+
+const FORMATION_431 = [
+  { id: 'st',   label: 'ST',  accepts: ['ST','RW','LW'],        row: 1 },
+  { id: 'lw',   label: 'LW',  accepts: ['LW','CAM','RW'],       row: 2 },
+  { id: 'cam',  label: 'CAM', accepts: ['CAM','CM','CDM'],      row: 2 },
+  { id: 'rw',   label: 'RW',  accepts: ['RW','CAM','LW'],       row: 2 },
+  { id: 'cdm1', label: 'CDM', accepts: ['CDM','CM'],            row: 3 },
+  { id: 'cdm2', label: 'CDM', accepts: ['CDM','CM'],            row: 3 },
+  { id: 'lb',   label: 'LB',  accepts: ['LB','CB'],             row: 4 },
+  { id: 'cb1',  label: 'CB',  accepts: ['CB','LB','RB'],        row: 4 },
+  { id: 'cb2',  label: 'CB',  accepts: ['CB','LB','RB'],        row: 4 },
+  { id: 'rb',   label: 'RB',  accepts: ['RB','CB'],             row: 4 },
+  { id: 'gk',   label: 'GK',  accepts: ['GK'],                  row: 5 },
+];
+
+let _lineupState  = {};
+let _activeSlotId = null;
+
+function renderLineup() {
+  _lineupState  = getLineup();
+  _activeSlotId = null;
+
+  const rowMap = {};
+  FORMATION_431.forEach(s => { (rowMap[s.row] = rowMap[s.row] || []).push(s); });
+
+  const rowsHTML = Object.keys(rowMap).sort((a,b) => a-b).map(row => `
+    <div class="pitch-row">
+      ${rowMap[row].map(slot => slotHTML(slot)).join('')}
+    </div>`).join('');
+
+  document.getElementById('app').innerHTML = `
+    <div class="lineup-view">
+      <div class="view-header">
+        <a href="#home" class="btn btn-ghost">← Back</a>
+        <h2>⚽ Starting 11</h2>
+        <div class="view-sub">4-2-3-1</div>
+        <button class="btn btn-ghost" onclick="clearLineupUI()">Clear</button>
+      </div>
+
+      <div class="pitch" id="pitch">
+        ${rowsHTML}
+        <div class="pitch-line pitch-center"></div>
+        <div class="pitch-circle"></div>
+      </div>
+
+      <div class="slot-picker-overlay" id="slotPicker" style="display:none" onclick="closeSlotPicker(event)">
+        <div class="slot-picker-modal">
+          <div class="slot-picker-header">
+            <span id="slotPickerTitle">Select Player</span>
+            <button class="slot-picker-close" onclick="closeSlotPicker()">✕</button>
+          </div>
+          <div class="slot-picker-list" id="slotPickerList"></div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function slotHTML(slot) {
+  const pid    = _lineupState[slot.id];
+  const player = pid ? ALL_PLAYERS.find(p => p.id === Number(pid)) : null;
+  const team   = player ? TEAMS[player.teamId] : null;
+
+  if (player && team) {
+    const fullName = [player.firstName, player.lastName].filter(Boolean).join(' ');
+    return `
+      <div class="pitch-slot pitch-slot--filled" onclick="openSlotPicker('${slot.id}')">
+        <div class="pitch-slot-photo-wrap" style="border-color:${team.color}">
+          <img src="${photoUrl(player.id)}" alt="${fullName}"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="pitch-slot-ini" style="background:${team.color};color:#fff;display:none">${initials(player)}</div>
+        </div>
+        <div class="pitch-slot-name">${player.lastName || player.firstName}</div>
+        <div class="pitch-slot-badge" style="background:${team.color}">${slot.label}</div>
+      </div>`;
+  }
+
+  return `
+    <div class="pitch-slot pitch-slot--empty" onclick="openSlotPicker('${slot.id}')">
+      <div class="pitch-slot-pos">${slot.label}</div>
+    </div>`;
+}
+
+function openSlotPicker(slotId) {
+  _activeSlotId = slotId;
+  const slot = FORMATION_431.find(s => s.id === slotId);
+  const col  = getCollection();
+
+  // Collect eligible owned players, sorted by name
+  const eligible = ALL_PLAYERS
+    .filter(p => slot.accepts.includes(p.position) && (col[p.id] || 0) > 0)
+    .sort((a, b) => (a.lastName || a.firstName).localeCompare(b.lastName || b.firstName));
+
+  document.getElementById('slotPickerTitle').textContent = `Select ${slot.label}`;
+
+  const list = document.getElementById('slotPickerList');
+  if (!eligible.length) {
+    list.innerHTML = `<div class="picker-empty">No collected ${slot.accepts.join('/')} in your album yet.</div>`;
+  } else {
+    list.innerHTML = eligible.map(p => {
+      const team = TEAMS[p.teamId];
+      const selected = _lineupState[slotId] === p.id;
+      return `
+        <button class="picker-item${selected ? ' picker-item--active' : ''}"
+                onclick="selectSlotPlayer('${slotId}', ${p.id})">
+          ${flagCircle(p.teamId, 'sm')}
+          <img class="picker-photo" src="${photoUrl(p.id)}" alt=""
+               onerror="this.style.display='none'">
+          <div class="picker-info">
+            <div class="picker-name">${[p.firstName, p.lastName].filter(Boolean).join(' ')}</div>
+            <div class="picker-detail">
+              <span class="picker-pos" style="background:${team.color}">${p.position}</span>
+              ${p.club}
+            </div>
+          </div>
+        </button>`;
+    }).join('');
+  }
+
+  document.getElementById('slotPicker').style.display = 'flex';
+}
+
+function closeSlotPicker(e) {
+  if (e && e.target !== document.getElementById('slotPicker')) return;
+  document.getElementById('slotPicker').style.display = 'none';
+  _activeSlotId = null;
+}
+
+function selectSlotPlayer(slotId, playerId) {
+  // Remove this player from any other slot first
+  Object.keys(_lineupState).forEach(k => {
+    if (_lineupState[k] === playerId) delete _lineupState[k];
+  });
+  _lineupState[slotId] = playerId;
+  saveLineup(_lineupState);
+  document.getElementById('slotPicker').style.display = 'none';
+  _activeSlotId = null;
+  renderLineup();
+}
+
+function clearLineupUI() {
+  if (!confirm('Clear your Starting 11?')) return;
+  clearLineup();
+  renderLineup();
 }
 
 // ─── PACK OPENING ────────────────────────────────────────────────────────────
@@ -244,7 +435,6 @@ function handleOpenPack() {
   openBtn.disabled = true;
   openBtn.textContent = 'Ripping…';
 
-  // Shake phase
   packWrap.classList.add('ripping');
 
   setTimeout(() => {
