@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,400&family=Bebas+Neue&family=Oswald:wght@400;600;700&display=swap');
 
 /* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -353,12 +353,12 @@ body {
   text-transform: uppercase;
 }
 
-/* Grid with shared borders (no double lines) */
+/* Card grid */
 .album-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-  border-left: var(--border);
-  border-bottom: var(--border);
+  gap: 8px;
+  padding: 8px;
 }
 
 /* ── Flag circles ── */

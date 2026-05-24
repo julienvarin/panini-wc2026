@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Card Design Mockups</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Oswald:wght@400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #1a1a1a;
+  color: #fff;
+  font-family: 'Barlow Condensed', sans-serif;
+  padding: 40px 20px;
+}
+h1 { text-align: center; font-size: 2rem; margin-bottom: 10px; letter-spacing: 2px; }
+.subtitle { text-align: center; color: #888; margin-bottom: 50px; font-size: .9rem; }
+.designs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 60px;
+}
+.design-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.design-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 3px;
+  color: #ccc;
+}
+.design-desc {
+  max-width: 180px;
+  text-align: center;
+  font-size: .7rem;
+  color: #777;
+  line-height: 1.4;
+}
+
+/* ═══════════════════════════════════════
+   DESIGN 1 — CLASSIC PANINI
+   Full photo, team bar top, name banner bottom
+   ═══════════════════════════════════════ */
+.card1 {
+  width: 180px;
+  height: 260px;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0,0,0,.5);
+}
+.card1 .c1-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  background: #009c3b;
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #fff;
+}
+.card1 .c1-header .flag {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,.3);
+}
+.card1 .c1-header span { flex: 1; }
+.card1 .c1-photo {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+.card1 .c1-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,.85));
+  padding: 25px 10px 8px;
+}
+.card1 .c1-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1;
+}
+.card1 .c1-meta {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 3px;
+  font-size: .55rem;
+  color: rgba(255,255,255,.7);
+}
+.card1 .c1-pos {
+  background: #ffdf00;
+  color: #009c3b;
+  padding: 1px 5px;
+  font-weight: 900;
+  font-size: .5rem;
+  border-radius: 2px;
+}
+.card1 .c1-rating {
+  position: absolute;
+  top: 38px;
+  left: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #FF9800;
+  color: #fff;
+  font-weight: 900;
+  font-size: .7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,.4);
+}
+
+/* ═══════════════════════════════════════
+   DESIGN 2 — RETRO 70s PANINI
+   Thick border, white margin, serif-ish name
+   ═══════════════════════════════════════ */
+.card2 {
+  width: 180px;
+  height: 260px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: #fff;
+  border: 6px solid #009c3b;
+  box-shadow: 0 4px 20px rgba(0,0,0,.5);
+  position: relative;
+}
+.card2 .c2-inner {
+  border: 2px solid #ffdf00;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.card2 .c2-photo {
+  width: 100%;
+  flex: 1;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  border-bottom: 3px solid #009c3b;
+}
+.card2 .c2-info {
+  padding: 6px 8px 4px;
+  text-align: center;
+  background: #fff;
+}
+.card2 .c2-team {
+  font-size: .5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #009c3b;
+  margin-bottom: 1px;
+}
+.card2 .c2-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: .95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #111;
+  line-height: 1;
+}
+.card2 .c2-detail {
+  font-size: .5rem;
+  color: #888;
+  font-weight: 600;
+  margin-top: 2px;
+}
+.card2 .c2-number {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  color: rgba(0,156,59,.15);
+  line-height: 1;
+}
+.card2 .c2-rating {
+  position: absolute;
+  bottom: 52px;
+  right: 12px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  color: #fff;
+  background: #FF9800;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+
+/* ═══════════════════════════════════════
+   DESIGN 3 — FIFA ULTIMATE TEAM
+   Diagonal cut, big rating, position badge
+   ═══════════════════════════════════════ */
+.card3 {
+  width: 180px;
+  height: 260px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(145deg, #0b3d0b 0%, #009c3b 50%, #006622 100%);
+  box-shadow: 0 4px 20px rgba(0,0,0,.5);
+}
+.card3 .c3-photo {
+  position: absolute;
+  bottom: 55px;
+  right: 0;
+  width: 140px;
+  height: 180px;
+  object-fit: cover;
+  object-position: top center;
+  mask-image: linear-gradient(to left, black 60%, transparent);
+  -webkit-mask-image: linear-gradient(to left, black 60%, transparent);
+}
+.card3 .c3-stats {
+  position: absolute;
+  top: 20px;
+  left: 14px;
+  text-align: center;
+}
+.card3 .c3-rating-big {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.8rem;
+  color: #ffdf00;
+  line-height: .9;
+}
+.card3 .c3-pos-big {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  color: #ffdf00;
+  letter-spacing: 2px;
+}
+.card3 .c3-flag {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-top: 6px;
+  border: 2px solid rgba(255,223,0,.4);
+}
+.card3 .c3-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,.7);
+  padding: 8px 12px;
+  text-align: center;
+}
+.card3 .c3-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #ffdf00;
+  line-height: 1;
+}
+.card3 .c3-club {
+  font-size: .5rem;
+  color: rgba(255,255,255,.6);
+  margin-top: 2px;
+  letter-spacing: 1px;
+}
+
+/* ═══════════════════════════════════════
+   DESIGN 4 — MODERN MINIMAL
+   Clean white, photo with rounded mask, subtle accents
+   ═══════════════════════════════════════ */
+.card4 {
+  width: 180px;
+  height: 260px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0,0,0,.5);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.card4 .c4-accent {
+  height: 4px;
+  background: linear-gradient(90deg, #009c3b, #ffdf00);
+}
+.card4 .c4-top {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px 0;
+  gap: 6px;
+}
+.card4 .c4-flag {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.card4 .c4-team-name {
+  flex: 1;
+  font-size: .5rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #aaa;
+}
+.card4 .c4-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .9rem;
+  color: #ddd;
+}
+.card4 .c4-photo-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+}
+.card4 .c4-photo {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top center;
+  border: 3px solid #009c3b;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+}
+.card4 .c4-info {
+  padding: 0 12px 10px;
+  text-align: center;
+}
+.card4 .c4-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #111;
+  line-height: 1;
+}
+.card4 .c4-meta {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: .5rem;
+  color: #999;
+  font-weight: 600;
+}
+.card4 .c4-rating {
+  position: absolute;
+  top: 40px;
+  right: 12px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #FF9800;
+  color: #fff;
+  font-weight: 900;
+  font-size: .75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+.card4 .c4-club {
+  font-size: .5rem;
+  color: #bbb;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+/* ═══════════════════════════════════════
+   DESIGN 5 — BOLD BANNER
+   Big photo, team color side stripe, bold bottom banner
+   ═══════════════════════════════════════ */
+.card5 {
+  width: 180px;
+  height: 260px;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  background: #111;
+  box-shadow: 0 4px 20px rgba(0,0,0,.5);
+}
+.card5 .c5-stripe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 28px;
+  background: #009c3b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 8px;
+  gap: 6px;
+  z-index: 2;
+}
+.card5 .c5-flag {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,.3);
+}
+.card5 .c5-rating-vert {
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  color: #ffdf00;
+  letter-spacing: 2px;
+}
+.card5 .c5-pos-vert {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .7rem;
+  color: rgba(255,255,255,.7);
+  letter-spacing: 1px;
+}
+.card5 .c5-photo {
+  position: absolute;
+  top: 0;
+  left: 28px;
+  right: 0;
+  bottom: 60px;
+  object-fit: cover;
+  object-position: top center;
+  width: calc(100% - 28px);
+  height: calc(100% - 60px);
+}
+.card5 .c5-banner {
+  position: absolute;
+  bottom: 0;
+  left: 28px;
+  right: 0;
+  height: 60px;
+  background: #009c3b;
+  padding: 6px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.card5 .c5-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1;
+}
+.card5 .c5-detail {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 3px;
+}
+.card5 .c5-club {
+  font-size: .5rem;
+  color: rgba(255,255,255,.7);
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.card5 .c5-age {
+  font-size: .45rem;
+  color: rgba(255,255,255,.5);
+}
+.card5 .c5-num {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  color: rgba(255,255,255,.15);
+  z-index: 1;
+}
+
+/* ═══════════════════════════════════════
+   DESIGN VARIANTS — show 2 cards per design
+   ═══════════════════════════════════════ */
+.design-cards {
+  display: flex;
+  gap: 16px;
+}
+
+/* Rare gold variant helpers */
+.card1.rare-v { }
+.card1.rare-v .c1-header { background: linear-gradient(90deg, #B8860B, #DAA520); }
+.card1.rare-v .c1-pos { background: #DAA520; color: #fff; }
+.card1.rare-v .c1-rating { background: #9C27B0; }
+
+.card2.rare-v { border-color: #B8860B; }
+.card2.rare-v .c2-inner { border-color: #DAA520; }
+.card2.rare-v .c2-photo { border-bottom-color: #B8860B; }
+.card2.rare-v .c2-team { color: #B8860B; }
+.card2.rare-v .c2-number { color: rgba(184,134,11,.15); }
+.card2.rare-v .c2-rating { background: #9C27B0; }
+
+.card3.rare-v { background: linear-gradient(145deg, #1a1a4e 0%, #002395 50%, #1a1a4e 100%); }
+.card3.rare-v .c3-rating-big { color: #ed2939; }
+.card3.rare-v .c3-pos-big { color: #ed2939; }
+.card3.rare-v .c3-name { color: #fff; }
+.card3.rare-v .c3-flag { border-color: rgba(237,41,57,.4); }
+
+.card5.rare-v .c5-stripe { background: linear-gradient(180deg, #B8860B, #DAA520); }
+.card5.rare-v .c5-banner { background: linear-gradient(90deg, #B8860B, #DAA520); }
+.card5.rare-v .c5-rating-vert { color: #fff; }
+</style>
+</head>
+<body>
+
+<h1>PANINI WC2026 — CARD DESIGNS</h1>
+<p class="subtitle">5 design proposals. Each shown with a normal + rare variant.</p>
+
+<div class="designs">
+
+  <!-- ═══ DESIGN 1 — CLASSIC PANINI ═══ -->
+  <div class="design-wrap">
+    <div class="design-label">1 — CLASSIC PANINI</div>
+    <div class="design-cards">
+      <div class="card1">
+        <div class="c1-header">
+          <img class="flag" src="https://flagcdn.com/w40/br.png" alt="">
+          <span>BRAZIL</span>
+          <span>#01</span>
+        </div>
+        <img class="c1-photo" src="images/players/1.jpg" alt="Alisson">
+        <div class="c1-rating">76</div>
+        <div class="c1-footer">
+          <div class="c1-name">ALISSON BECKER</div>
+          <div class="c1-meta">
+            <span class="c1-pos">GK</span>
+            <span>33 yrs</span>
+            <span>Liverpool</span>
+          </div>
+        </div>
+      </div>
+      <div class="card1 rare-v">
+        <div class="c1-header">
+          <img class="flag" src="https://flagcdn.com/w40/br.png" alt="">
+          <span>BRAZIL</span>
+          <span>#19</span>
+        </div>
+        <img class="c1-photo" src="images/players/19.jpg" alt="Vinicius">
+        <div class="c1-rating">96</div>
+        <div class="c1-footer">
+          <div class="c1-name">VINÍCIUS JR.</div>
+          <div class="c1-meta">
+            <span class="c1-pos">LW</span>
+            <span>25 yrs</span>
+            <span>Real Madrid</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="design-desc">Photo fills the card. Team bar at top, name fades in at bottom. Rating circle floats on photo.</div>
+  </div>
+
+  <!-- ═══ DESIGN 2 — RETRO 70s ═══ -->
+  <div class="design-wrap">
+    <div class="design-label">2 — RETRO 70s</div>
+    <div class="design-cards">
+      <div class="card2">
+        <div class="c2-inner">
+          <img class="c2-photo" src="images/players/1.jpg" alt="Alisson">
+          <div class="c2-info">
+            <div class="c2-team">BRAZIL</div>
+            <div class="c2-name">ALISSON BECKER</div>
+            <div class="c2-detail">GK &middot; Liverpool &middot; 33 yrs</div>
+          </div>
+        </div>
+        <div class="c2-number">#01</div>
+        <div class="c2-rating">76</div>
+      </div>
+      <div class="card2 rare-v">
+        <div class="c2-inner">
+          <img class="c2-photo" src="images/players/19.jpg" alt="Vinicius">
+          <div class="c2-info">
+            <div class="c2-team">BRAZIL</div>
+            <div class="c2-name">VINÍCIUS JR.</div>
+            <div class="c2-detail">LW &middot; Real Madrid &middot; 25 yrs</div>
+          </div>
+        </div>
+        <div class="c2-number">#19</div>
+        <div class="c2-rating">96</div>
+      </div>
+    </div>
+    <div class="design-desc">Thick team-color border with gold inner frame. Classic sticker feel. Clean info section below.</div>
+  </div>
+
+  <!-- ═══ DESIGN 3 — FIFA UT ═══ -->
+  <div class="design-wrap">
+    <div class="design-label">3 — FIFA ULTIMATE</div>
+    <div class="design-cards">
+      <div class="card3">
+        <div class="c3-stats">
+          <div class="c3-rating-big">76</div>
+          <div class="c3-pos-big">GK</div>
+          <img class="c3-flag" src="https://flagcdn.com/w40/br.png" alt="">
+        </div>
+        <img class="c3-photo" src="images/players/1.jpg" alt="Alisson">
+        <div class="c3-bottom">
+          <div class="c3-name">ALISSON BECKER</div>
+          <div class="c3-club">LIVERPOOL</div>
+        </div>
+      </div>
+      <div class="card3 rare-v">
+        <div class="c3-stats">
+          <div class="c3-rating-big">99</div>
+          <div class="c3-pos-big">ST</div>
+          <img class="c3-flag" src="https://flagcdn.com/w40/fr.png" alt="">
+        </div>
+        <img class="c3-photo" src="images/players/75.jpg" alt="Mbappe">
+        <div class="c3-bottom">
+          <div class="c3-name">KYLIAN MBAPPÉ</div>
+          <div class="c3-club">REAL MADRID</div>
+        </div>
+      </div>
+    </div>
+    <div class="design-desc">FIFA-inspired. Big rating + position on left, photo fades right. Team gradient background.</div>
+  </div>
+
+  <!-- ═══ DESIGN 4 — MODERN MINIMAL ═══ -->
+  <div class="design-wrap">
+    <div class="design-label">4 — MODERN MINIMAL</div>
+    <div class="design-cards">
+      <div class="card4">
+        <div class="c4-accent"></div>
+        <div class="c4-top">
+          <img class="c4-flag" src="https://flagcdn.com/w40/br.png" alt="">
+          <span class="c4-team-name">BRAZIL</span>
+          <span class="c4-num">#01</span>
+        </div>
+        <div class="c4-photo-area">
+          <img class="c4-photo" src="images/players/1.jpg" alt="Alisson">
+        </div>
+        <div class="c4-info">
+          <div class="c4-name">ALISSON BECKER</div>
+          <div class="c4-meta">
+            <span>GK</span>
+            <span>&middot;</span>
+            <span>33 yrs</span>
+          </div>
+          <div class="c4-club">Liverpool</div>
+        </div>
+        <div class="c4-rating">76</div>
+      </div>
+      <div class="card4">
+        <div class="c4-accent" style="background:linear-gradient(90deg,#c60b1e,#ffc400)"></div>
+        <div class="c4-top">
+          <img class="c4-flag" src="https://flagcdn.com/w40/es.png" alt="">
+          <span class="c4-team-name">SPAIN</span>
+          <span class="c4-num">#22</span>
+        </div>
+        <div class="c4-photo-area">
+          <img class="c4-photo" src="images/players/126.jpg" alt="Yamal" style="border-color:#c60b1e">
+        </div>
+        <div class="c4-info">
+          <div class="c4-name">LAMINE YAMAL</div>
+          <div class="c4-meta">
+            <span>RW</span>
+            <span>&middot;</span>
+            <span>18 yrs</span>
+          </div>
+          <div class="c4-club">Barcelona</div>
+        </div>
+        <div class="c4-rating" style="background:#9C27B0">99</div>
+      </div>
+    </div>
+    <div class="design-desc">Clean white card, circular photo, gradient accent strip. Feels premium and modern.</div>
+  </div>
+
+  <!-- ═══ DESIGN 5 — BOLD BANNER ═══ -->
+  <div class="design-wrap">
+    <div class="design-label">5 — BOLD BANNER</div>
+    <div class="design-cards">
+      <div class="card5">
+        <div class="c5-stripe">
+          <img class="c5-flag" src="https://flagcdn.com/w40/br.png" alt="">
+          <div class="c5-rating-vert">76</div>
+          <div class="c5-pos-vert">GK</div>
+        </div>
+        <img class="c5-photo" src="images/players/1.jpg" alt="Alisson">
+        <div class="c5-banner">
+          <div class="c5-name">ALISSON BECKER</div>
+          <div class="c5-detail">
+            <span class="c5-club">Liverpool</span>
+            <span class="c5-age">33 yrs</span>
+          </div>
+        </div>
+        <div class="c5-num">#01</div>
+      </div>
+      <div class="card5 rare-v">
+        <div class="c5-stripe">
+          <img class="c5-flag" src="https://flagcdn.com/w40/br.png" alt="">
+          <div class="c5-rating-vert">96</div>
+          <div class="c5-pos-vert">LW</div>
+        </div>
+        <img class="c5-photo" src="images/players/19.jpg" alt="Vinicius">
+        <div class="c5-banner">
+          <div class="c5-name">VINÍCIUS JR.</div>
+          <div class="c5-detail">
+            <span class="c5-club">Real Madrid</span>
+            <span class="c5-age">25 yrs</span>
+          </div>
+        </div>
+        <div class="c5-num">#19</div>
+      </div>
+    </div>
+    <div class="design-desc">Team-color side stripe with vertical rating. Photo fills the card. Bold bottom banner.</div>
+  </div>
+
+</div>
+
+</body>
+</html>

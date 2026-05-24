@@ -51,7 +51,7 @@ function stickerCardHTML(player, owned, reveal = false, pulledAsRare = false) {
     <img class="card-photo" src="${photoUrl(player.id)}"
          alt="${fullName}"
          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-    <div class="card-initials" style="background:${team.color};display:none">
+    <div class="card-initials" style="display:none">
       <svg class="card-silhouette" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
         <circle cx="50" cy="36" r="24" fill="white"/>
         <path d="M8 118 Q8 72 50 72 Q92 72 92 118Z" fill="white"/>
@@ -61,31 +61,32 @@ function stickerCardHTML(player, owned, reveal = false, pulledAsRare = false) {
     <div class="card-initials-q">?</div>
   `;
 
+  // FIFA UT gradient: darken the team color for the gradient
+  const teamColor = team.color || '#333';
+
   return `
     <div class="sticker-card ${rareClass} ${missClass}" data-id="${player.id}">
-      <div class="card-header" style="background:${team.color}">
-        ${flagCircle(player.teamId, 'sm')}
-        <span class="card-team">${team.name.toUpperCase()}</span>
-        <span class="card-number">#${String(player.number).padStart(2,'0')}</span>
-        ${dupBadge}
+      <div class="card-bg" style="background:linear-gradient(145deg, ${teamColor} 0%, ${teamColor}dd 100%)"></div>
+      <div class="card-stats">
+        ${show ? `<div class="card-rating-big">${player.rating || '—'}</div>` : ''}
+        ${show ? `<div class="card-pos-big">${POS_LABEL[player.position] || player.position}</div>` : ''}
+        ${team.flagCode ? `<img class="card-flag" src="https://flagcdn.com/w40/${team.flagCode}.png" alt="${team.name}" onerror="this.style.opacity=0">` : ''}
       </div>
       <div class="card-photo-wrap">
         ${photoHTML}
         ${!show ? '<div class="missing-overlay"></div>' : ''}
       </div>
-      <div class="card-info">
-        ${show ? `<span class="card-rating-circle" style="background:${ratingColor(player.rating)}">${player.rating || '—'}</span>` : ''}
-        <div class="card-info-text">
-          <div class="card-name">${show ? fullName.toUpperCase() : '???'}</div>
-          ${show ? `
-            <div class="card-meta">
-              <span class="card-pos">${POS_LABEL[player.position] || player.position}</span>
-              <span class="card-age">${player.age} yrs</span>
-            </div>
-            <div class="card-club">${player.club}</div>
+      ${dupBadge}
+      <div class="card-bottom">
+        <div class="card-name">${show ? fullName.toUpperCase() : '???'}</div>
+        ${show ? `
+          <div class="card-detail">
+            <span>${player.club}</span>
+            <span>·</span>
+            <span>${player.age} yrs</span>
             ${rareBadge}
-          ` : ''}
-        </div>
+          </div>
+        ` : ''}
       </div>
     </div>`;
 }
@@ -465,17 +466,25 @@ function handleOpenPack() {
   openBtn.disabled = true;
   openBtn.textContent = 'Ripping…';
 
+  // Phase 1: grab & shake
   packWrap.classList.add('ripping');
 
   setTimeout(() => {
     packWrap.classList.remove('ripping');
-    packWrap.classList.add('torn');
+    // Phase 2: progressive tear from right to left
+    packWrap.classList.add('tearing');
 
     setTimeout(() => {
-      packWrap.style.display = 'none';
-      openBtn.style.display  = 'none';
-      showPackCards();
-    }, 720);
+      // Phase 3: halves fly apart
+      packWrap.classList.remove('tearing');
+      packWrap.classList.add('torn');
+
+      setTimeout(() => {
+        packWrap.style.display = 'none';
+        openBtn.style.display  = 'none';
+        showPackCards();
+      }, 700);
+    }, 600);
   }, 750);
 }
 

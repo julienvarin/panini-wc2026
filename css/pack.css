@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════
-   PACK OPENING — SWISS BRUTALIST
+   PACK OPENING
    ════════════════════════════════════════ */
 
 .pack-view { text-align: center; }
@@ -28,15 +28,16 @@
   overflow: hidden;
   background: #0A0A0A;
   border: 3px solid #0A0A0A;
-  box-shadow: 6px 6px 0 var(--red, #E8000D);
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.4);
   animation: packPulse 2s ease-in-out infinite;
 }
 @keyframes packPulse {
-  0%, 100% { box-shadow: 6px 6px 0 var(--red, #E8000D); }
-  50%       { box-shadow: 8px 8px 0 var(--red, #E8000D); }
+  0%, 100% { box-shadow: 0 4px 20px rgba(0,0,0,.4); }
+  50%       { box-shadow: 0 8px 30px rgba(0,0,0,.5); }
 }
 
-/* Diagonal corners via gradients — no transform needed */
+/* Diagonal corners via gradients */
 .pack-body::before {
   content: '';
   position: absolute;
@@ -48,29 +49,32 @@
 }
 .pack-body::after { display: none; }
 
-/* Tear-off strip */
+/* Tear-off strip — right side */
 .pack-tearstrip {
   position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 48px;
+  top: 0; right: 0; bottom: 0;
+  width: 48px;
   background: var(--red, #E8000D);
-  border-bottom: 3px dashed rgba(255,255,255,.5);
+  border-left: 3px dashed rgba(255,255,255,.5);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: .65rem;
+  font-size: .6rem;
   font-weight: 700;
   color: rgba(255,255,255,.95);
   letter-spacing: 4px;
   text-transform: uppercase;
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
   z-index: 2;
+  border-radius: 0 7px 7px 0;
 }
 
 /* Pack content */
 .pack-content {
   position: absolute;
-  top: 48px; left: 0; right: 0; bottom: 0;
+  top: 0; left: 0; right: 48px; bottom: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -110,92 +114,142 @@
   padding: 3px 12px;
 }
 
-/* Not used in new design */
 .pack-divider { display: none; }
 
-/* ── RIPPING ANIMATION ── */
+/* ═══════════════════════════════════════
+   RIPPING ANIMATION — 3 phases
+   1) Shake (grab the pack)
+   2) Tear (progressive rip right→left)
+   3) Torn (halves fly apart)
+   ═══════════════════════════════════════ */
+
+/* ── PHASE 1: SHAKE ── */
 @keyframes packShake {
   0%   { transform: translate(0,0) rotate(0deg); }
-  7%   { transform: translate(-8px, 2px) rotate(-3deg); }
-  15%  { transform: translate(9px, -3px) rotate(3.5deg); }
-  23%  { transform: translate(-9px, 4px) rotate(-3deg); }
-  32%  { transform: translate(11px, -4px) rotate(4deg); }
-  42%  { transform: translate(-10px, 3px) rotate(-3.5deg); }
-  52%  { transform: translate(9px, -3px) rotate(3deg); }
-  62%  { transform: translate(-6px, 4px) rotate(-2deg); }
-  72%  { transform: translate(8px, -2px) rotate(2.5deg); }
-  84%  { transform: translate(-3px, 1px) rotate(-1deg); }
-  93%  { transform: translate(2px, -1px) rotate(0.5deg); }
+  12%  { transform: translate(5px, -2px) rotate(1.5deg); }
+  25%  { transform: translate(-4px, 3px) rotate(-1deg); }
+  37%  { transform: translate(7px, -1px) rotate(2deg); }
+  50%  { transform: translate(-5px, 2px) rotate(-1.5deg); }
+  62%  { transform: translate(8px, -2px) rotate(2deg); }
+  75%  { transform: translate(-3px, 1px) rotate(-1deg); }
+  87%  { transform: translate(4px, -1px) rotate(1deg); }
   100% { transform: translate(0,0) rotate(0deg); }
 }
 
-/* Shake the entire pack-wrap (not just the body) for full visual impact */
 .pack-wrap.ripping {
   animation: packShake 0.72s cubic-bezier(.36,.07,.19,.97) forwards;
 }
-/* Pause the idle pulse during the shake */
 .pack-wrap.ripping .pack-body {
   animation: none;
 }
 
-/* The two torn halves */
+/* ── PHASE 2: TEARING — clip-path wipes right to left ── */
+@keyframes tearReveal {
+  0% {
+    clip-path: inset(0 0 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 78%);
+  }
+}
+
+@keyframes tearStripPeel {
+  0% {
+    transform: translateX(0) rotate(0deg);
+    transform-origin: left center;
+  }
+  30% {
+    transform: translateX(4px) rotate(2deg);
+  }
+  100% {
+    transform: translateX(60px) rotate(12deg);
+    opacity: .7;
+  }
+}
+
+.pack-wrap.tearing .pack-body {
+  animation: none;
+}
+
+/* The tearstrip peels away during the tear phase */
+.pack-wrap.tearing .pack-tearstrip {
+  animation: tearStripPeel .6s cubic-bezier(.4,0,.2,1) forwards;
+}
+
+/* The pack body gets progressively clipped from right */
+.pack-wrap.tearing .pack-body {
+  animation: tearReveal .6s cubic-bezier(.3,0,.7,1) forwards;
+}
+
+/* ── PHASE 3: TORN — halves fly apart ── */
 .pack-top-half,
 .pack-bot-half {
   position: absolute;
-  left: -2px; right: -2px;
+  top: -2px; bottom: -2px;
   overflow: hidden;
   display: none;
+  border-radius: 10px;
 }
+
+/* Left half (main body) */
 .pack-top-half {
-  top: -2px;
-  height: 52px;
-  background: var(--red, #E8000D);
-  clip-path: polygon(
-    0% 0%, 100% 0%,
-    100% 80%,
-    96% 88%, 92% 78%, 88% 92%, 84% 80%, 80% 90%,
-    76% 78%, 72% 92%, 68% 80%, 64% 88%, 60% 76%,
-    56% 90%, 52% 80%, 48% 92%, 44% 78%, 40% 90%,
-    36% 80%, 32% 88%, 28% 76%, 24% 90%, 20% 80%,
-    16% 88%, 12% 78%, 8% 92%, 4% 80%, 0% 88%
-  );
-}
-.pack-bot-half {
-  top: 48px;
-  bottom: -2px;
+  left: -2px;
+  right: 52px;
   background: #0A0A0A;
   clip-path: polygon(
-    0% 12%,
-    4% 20%, 8% 8%, 12% 22%, 16% 12%,
-    20% 20%, 24% 10%, 28% 24%, 32% 12%,
-    36% 20%, 40% 10%, 44% 22%, 48% 8%,
-    52% 20%, 56% 10%, 60% 24%, 64% 12%,
-    68% 20%, 72% 8%, 76% 22%, 80% 10%,
-    84% 20%, 88% 8%, 92% 22%, 96% 12%,
-    100% 20%,
-    100% 100%, 0% 100%
+    0% 0%,
+    96% 0%,
+    94% 3%, 98% 6%, 92% 9%, 97% 12%,
+    93% 15%, 98% 18%, 92% 21%, 97% 24%,
+    93% 27%, 98% 30%, 92% 33%, 97% 36%,
+    93% 39%, 98% 42%, 92% 45%, 97% 48%,
+    93% 51%, 98% 54%, 92% 57%, 97% 60%,
+    93% 63%, 98% 66%, 92% 69%, 97% 72%,
+    93% 75%, 98% 78%, 92% 81%, 97% 84%,
+    93% 87%, 98% 90%, 92% 93%, 97% 96%,
+    96% 100%,
+    0% 100%
   );
 }
 
-@keyframes tearTopFly {
-  0%   { transform: translateY(0) rotate(0deg) scaleX(1); opacity: 1; }
-  12%  { transform: translateY(-10px) rotate(-4deg) scaleX(1.04); opacity: 1; }
-  100% { transform: translateY(-300px) rotate(-28deg) scaleX(0.9); opacity: 0; }
+/* Right half (torn strip) */
+.pack-bot-half {
+  right: -2px;
+  width: 56px;
+  background: var(--red, #E8000D);
+  clip-path: polygon(
+    4% 0%,
+    6% 3%, 2% 6%, 8% 9%, 3% 12%,
+    7% 15%, 2% 18%, 8% 21%, 3% 24%,
+    7% 27%, 2% 30%, 8% 33%, 3% 36%,
+    7% 39%, 2% 42%, 8% 45%, 3% 48%,
+    7% 51%, 2% 54%, 8% 57%, 3% 60%,
+    7% 63%, 2% 66%, 8% 69%, 3% 72%,
+    7% 75%, 2% 78%, 8% 81%, 3% 84%,
+    7% 87%, 2% 90%, 8% 93%, 3% 96%,
+    4% 100%,
+    100% 100%, 100% 0%
+  );
 }
-@keyframes tearBotFly {
-  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
-  12%  { transform: translateY(10px) rotate(3deg); opacity: 1; }
-  100% { transform: translateY(240px) rotate(20deg); opacity: 0; }
+
+@keyframes tearLeftDrift {
+  0%   { transform: translateX(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateX(-200px) rotate(-8deg); opacity: 0; }
+}
+@keyframes tearRightFling {
+  0%   { transform: translateX(0) rotate(0deg); opacity: 1; }
+  20%  { transform: translateX(30px) rotate(5deg); opacity: 1; }
+  100% { transform: translateX(320px) rotate(25deg); opacity: 0; }
 }
 
 .pack-wrap.torn .pack-body { display: none; }
 .pack-wrap.torn .pack-top-half {
   display: block;
-  animation: tearTopFly 0.7s cubic-bezier(.4,0,.2,1) forwards;
+  animation: tearLeftDrift .7s cubic-bezier(.4,0,.2,1) forwards;
 }
 .pack-wrap.torn .pack-bot-half {
   display: block;
-  animation: tearBotFly 0.7s cubic-bezier(.4,0,.2,1) 0.05s forwards;
+  animation: tearRightFling .7s cubic-bezier(.2,0,.3,1) forwards;
 }
 
 /* ── Open button ── */
@@ -213,13 +267,14 @@
 /* ── Flip card ── */
 .flip-card {
   width: 148px;
-  height: 228px;
+  aspect-ratio: 9 / 13;
   cursor: pointer;
   opacity: 0;
   transform: translateY(-60px) scale(.9);
   transition: opacity .45s ease, transform .45s ease;
   position: relative;
   overflow: hidden;
+  border-radius: 10px;
 }
 
 .flip-card::after {
@@ -245,7 +300,7 @@
   transform: translateY(0) scale(1);
 }
 
-/* ScaleX-based flip — avoids backface-visibility browser bugs entirely */
+/* ScaleX-based flip */
 .flip-inner {
   width: 100%;
   height: 100%;
@@ -253,31 +308,27 @@
   transition: transform .27s cubic-bezier(.4,0,.8,1);
 }
 
-/* Phase 1: squeeze to invisible (fold in) */
 .flip-card.flip-phase1 .flip-inner { transform: scaleX(0); }
-
-/* Phase 2: start from invisible with no transition, then natural reverse plays */
 .flip-card.flip-phase2 .flip-inner { transform: scaleX(0); transition: none; }
 
 .flip-back, .flip-front {
   position: absolute;
   inset: 0;
   overflow: hidden;
+  border-radius: 10px;
 }
 
-/* The front face is hidden until the card is flipped */
 .flip-front { display: none; }
 .flip-card.flipped .flip-front { display: block; }
 .flip-card.flipped .flip-back  { display: none; }
 
-/* Bold Swiss card back */
+/* Card back — matches FIFA UT rounded style */
 .flip-back {
   background:
     linear-gradient(225deg, var(--red, #E8000D) 0%, var(--red, #E8000D) 30%, transparent 30%),
     linear-gradient(45deg,  rgba(0,61,245,.75)   0%, rgba(0,61,245,.75)  30%, transparent 30%),
     #0A0A0A;
-  border: 3px solid #0A0A0A;
-  box-shadow: 4px 4px 0 var(--red, #E8000D);
+  box-shadow: 0 4px 16px rgba(0,0,0,.4);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -314,16 +365,13 @@
   animation: cardPulse 2s ease-in-out infinite;
 }
 @keyframes cardPulse {
-  0%, 100% { box-shadow: 4px 4px 0 var(--red, #E8000D); }
-  50%       { box-shadow: 6px 6px 0 var(--red, #E8000D); }
+  0%, 100% { box-shadow: 0 4px 16px rgba(0,0,0,.4); }
+  50%       { box-shadow: 0 8px 24px rgba(0,0,0,.5); }
 }
 
 .flip-front .sticker-card {
   width: 100%;
   height: 100%;
-  border: none;
-  border-right: none;
-  border-bottom: none;
 }
 
 /* ── Add to collection ── */

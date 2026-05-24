@@ -1,39 +1,33 @@
 /* ════════════════════════════════════════
-   SWISS BRUTALIST STICKER CARD
+   FIFA ULTIMATE TEAM STYLE CARD
    ════════════════════════════════════════ */
 
 .sticker-card {
-  background: #fff;
-  /* Grid border technique: card provides right + bottom, grid provides left + top */
-  border-right:  2.5px solid #0A0A0A;
-  border-bottom: 2.5px solid #0A0A0A;
-  border-top: none;
-  border-left: none;
+  border-radius: 10px;
   overflow: hidden;
   position: relative;
-  transition: transform .1s, box-shadow .1s;
+  transition: transform .15s, box-shadow .15s;
+  aspect-ratio: 9 / 13;
 }
 
 /* Hover lift in album / stickers view */
 .album-grid .sticker-card:hover,
 .stickers-grid .sticker-card:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 3px 3px 0 #0A0A0A;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.4);
   z-index: 2;
 }
 
+/* ── TEAM GRADIENT BACKGROUND ── */
+.sticker-card .card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
 /* ── RARE — GOLD TREATMENT ── */
-.sticker-card.rare {
-  border-right-color:  #B8860B;
-  border-bottom-color: #B8860B;
-  background: linear-gradient(160deg, #FFFAE8 0%, #FFF5C0 45%, #FFFAE8 100%);
-  box-shadow: 0 0 0 1px #DAA520;
-}
-.sticker-card.rare .card-info {
-  background: linear-gradient(160deg, #FFFAE8 0%, #FFF5C0 100%);
-}
-.sticker-card.rare .card-photo-wrap {
-  background: linear-gradient(160deg, #FFFAE8 0%, #FFF5C0 100%);
+.sticker-card.rare .card-bg {
+  background: linear-gradient(145deg, #3a2a00 0%, #B8860B 50%, #3a2a00 100%) !important;
 }
 /* Travelling gold shimmer */
 .sticker-card.rare::before {
@@ -43,14 +37,15 @@
   background: linear-gradient(
     115deg,
     transparent 20%,
-    rgba(255, 215, 0, 0.3) 40%,
-    rgba(255, 200, 0, 0.15) 52%,
+    rgba(255, 215, 0, 0.25) 40%,
+    rgba(255, 200, 0, 0.12) 52%,
     transparent 70%
   );
   background-size: 200% 200%;
   animation: goldShimmer 1.8s ease-in-out infinite;
-  z-index: 3;
+  z-index: 5;
   pointer-events: none;
+  border-radius: 10px;
 }
 @keyframes goldShimmer {
   0%   { background-position: 200% 0; }
@@ -58,11 +53,12 @@
 }
 
 /* ── MISSING (not collected) ── */
-.sticker-card.missing {
-  background: #F0F0F0;
+.sticker-card.missing .card-bg {
+  background: #e0e0e0 !important;
 }
-.sticker-card.missing .card-header {
-  opacity: .35;
+.sticker-card.missing .card-stats,
+.sticker-card.missing .card-flag {
+  opacity: .25;
 }
 .missing-overlay {
   position: absolute;
@@ -70,72 +66,75 @@
   background: repeating-linear-gradient(
     -45deg,
     transparent 0px, transparent 6px,
-    rgba(0,0,0,.07) 6px, rgba(0,0,0,.07) 7px
+    rgba(0,0,0,.06) 6px, rgba(0,0,0,.06) 7px
   );
   pointer-events: none;
-  z-index: 1;
+  z-index: 3;
+  border-radius: 10px;
 }
 
-/* ── CARD HEADER BAND ── */
-.card-header {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 7px 5px 6px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: .6rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  position: relative;
-  border-bottom: 2px solid rgba(0,0,0,.18);
-  color: #fff !important;  /* always white regardless of team.textColor */
-}
-.card-team   { flex: 1; line-height: 1; color: #fff; }
-.card-number { opacity: .8; font-size: .58rem; color: #fff; }
-
-/* Duplicate badge */
-.dup-badge {
+/* ── STATS COLUMN (rating, pos, flag) ── */
+.card-stats {
   position: absolute;
-  top: -4px; right: -4px;
-  background: var(--red, #E8000D);
+  top: 10px;
+  left: 8px;
+  text-align: center;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+.card-rating-big {
+  font-family: 'Bebas Neue', 'Barlow Condensed', sans-serif;
+  font-size: 1.8rem;
   color: #fff;
-  font-family: 'Barlow Condensed', sans-serif;
+  line-height: .9;
+  text-shadow: 0 1px 4px rgba(0,0,0,.3);
+}
+.sticker-card.rare .card-rating-big {
+  color: #FFD700;
+}
+.card-pos-big {
+  font-family: 'Bebas Neue', 'Barlow Condensed', sans-serif;
   font-size: .65rem;
-  font-weight: 900;
-  letter-spacing: .5px;
-  padding: 1px 5px;
-  border-radius: 0;
-  border: 1.5px solid #fff;
-  z-index: 4;
+  color: rgba(255,255,255,.85);
+  letter-spacing: 2px;
+  text-shadow: 0 1px 3px rgba(0,0,0,.3);
+}
+.sticker-card.rare .card-pos-big {
+  color: #FFD700;
+}
+.card-flag {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-top: 4px;
+  border: 1.5px solid rgba(255,255,255,.3);
+}
+.sticker-card.rare .card-flag {
+  border-color: rgba(255,215,0,.4);
 }
 
-/* ── PHOTO AREA ── */
+/* ── PHOTO ── */
 .card-photo-wrap {
-  position: relative;
-  width: 100%;
-  padding-top: 85%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: var(--bottom-bar-h, 34px);
+  width: 80%;
+  z-index: 1;
   overflow: hidden;
-  background: #fff;
 }
 .card-photo {
-  position: absolute;
-  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center;
+  object-fit: cover;
+  object-position: top center;
   display: block;
-}
-.card-photo-wrap::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 2px solid #0A0A0A;
-  pointer-events: none;
-}
-.sticker-card.rare .card-photo-wrap::after {
-  border-color: #B8860B;
+  mask-image: linear-gradient(to left, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to left, black 70%, transparent 100%);
 }
 .card-initials {
   position: absolute;
@@ -146,112 +145,90 @@
   z-index: 1;
 }
 .card-silhouette {
-  width: 58%;
-  opacity: .38;
+  width: 50%;
+  opacity: .25;
 }
 .card-initials-q {
   position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Barlow Condensed', sans-serif;
+  right: 10%;
+  top: 30%;
+  font-family: 'Bebas Neue', 'Barlow Condensed', sans-serif;
   font-size: 2.5rem;
   font-weight: 900;
-  color: rgba(0,0,0,.15);
+  color: rgba(0,0,0,.12);
   z-index: 1;
 }
 
-/* ── INFO SECTION ── */
-.card-info {
+/* ── BOTTOM BAR (name, club, age) ── */
+.card-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--bottom-bar-h, 34px);
+  background: rgba(0,0,0,.7);
+  padding: 4px 8px;
+  text-align: center;
   display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 4px 6px;
-  background: #fff;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2;
+  border-radius: 0 0 10px 10px;
 }
-.card-rating-circle {
-  flex-shrink: 0;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
+.card-name {
+  font-family: 'Oswald', 'Barlow Condensed', sans-serif;
+  font-size: .72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sticker-card.rare .card-name {
+  color: #FFD700;
+}
+.sticker-card.missing .card-name {
+  color: #999;
+}
+.card-detail {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  align-items: center;
+  margin-top: 2px;
+  font-size: .45rem;
+  color: rgba(255,255,255,.6);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* Duplicate badge */
+.dup-badge {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  background: var(--red, #E8000D);
   color: #fff;
   font-family: 'Barlow Condensed', sans-serif;
   font-size: .6rem;
   font-weight: 900;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-}
-.card-info-text {
-  flex: 1;
-  min-width: 0;
-  text-align: center;
-}
-.card-name {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: .78rem;
-  font-weight: 900;
   letter-spacing: .5px;
-  line-height: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 2px;
-  text-transform: uppercase;
-  color: #0A0A0A;
+  padding: 1px 5px;
+  border-radius: 3px;
+  border: 1.5px solid rgba(255,255,255,.5);
+  z-index: 4;
 }
-.sticker-card.rare    .card-name { color: #8B6014; }
-.sticker-card.missing .card-name { color: #C0C0C0; }
 
-.card-meta {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  font-size: .55rem;
-  margin-bottom: 2px;
-}
-.card-pos {
-  background: #0A0A0A;
-  color: #fff;
-  padding: 1px 4px;
-  border-radius: 0;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: .52rem;
-  letter-spacing: .5px;
-}
-.sticker-card.rare .card-pos { background: #B8860B; }
-.sticker-card.rare .card-rare-badge { color: #B8860B; }
-
-.card-age {
-  font-style: normal;
-  font-weight: 700;
-  color: var(--gray-dark, #666);
-  font-size: .52rem;
-  font-family: 'Barlow Condensed', sans-serif;
-}
-.card-club {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: .52rem;
-  font-weight: 700;
-  color: #888;
-  letter-spacing: .5px;
-  text-transform: uppercase;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.2;
-}
+/* Rare badge */
 .card-rare-badge {
-  display: inline-block;
-  margin-top: 3px;
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: .55rem;
+  font-size: .42rem;
   font-weight: 900;
-  color: var(--red, #E8000D);
+  color: #FFD700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
 }
