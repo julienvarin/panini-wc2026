@@ -116,20 +116,26 @@
 /* ── RIPPING ANIMATION ── */
 @keyframes packShake {
   0%   { transform: translate(0,0) rotate(0deg); }
-  10%  { transform: translate(-4px, 1px) rotate(-1.5deg); }
-  20%  { transform: translate(4px, -1px) rotate(1.5deg); }
-  30%  { transform: translate(-3px, 2px) rotate(-1deg); }
-  40%  { transform: translate(5px, -2px) rotate(2deg); }
-  50%  { transform: translate(-4px, 1px) rotate(-1.5deg); }
-  60%  { transform: translate(4px, -1px) rotate(1deg); }
-  70%  { transform: translate(-2px, 2px) rotate(-0.5deg); }
-  80%  { transform: translate(3px, -1px) rotate(1deg); }
-  90%  { transform: translate(-1px, 0) rotate(-0.5deg); }
+  7%   { transform: translate(-8px, 2px) rotate(-3deg); }
+  15%  { transform: translate(9px, -3px) rotate(3.5deg); }
+  23%  { transform: translate(-9px, 4px) rotate(-3deg); }
+  32%  { transform: translate(11px, -4px) rotate(4deg); }
+  42%  { transform: translate(-10px, 3px) rotate(-3.5deg); }
+  52%  { transform: translate(9px, -3px) rotate(3deg); }
+  62%  { transform: translate(-6px, 4px) rotate(-2deg); }
+  72%  { transform: translate(8px, -2px) rotate(2.5deg); }
+  84%  { transform: translate(-3px, 1px) rotate(-1deg); }
+  93%  { transform: translate(2px, -1px) rotate(0.5deg); }
   100% { transform: translate(0,0) rotate(0deg); }
 }
 
+/* Shake the entire pack-wrap (not just the body) for full visual impact */
+.pack-wrap.ripping {
+  animation: packShake 0.72s cubic-bezier(.36,.07,.19,.97) forwards;
+}
+/* Pause the idle pulse during the shake */
 .pack-wrap.ripping .pack-body {
-  animation: packShake 0.65s cubic-bezier(.36,.07,.19,.97) forwards;
+  animation: none;
 }
 
 /* The two torn halves */
@@ -172,14 +178,14 @@
 }
 
 @keyframes tearTopFly {
-  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
-  20%  { transform: translateY(-12px) rotate(-2deg); opacity: 1; }
-  100% { transform: translateY(-220px) rotate(-18deg); opacity: 0; }
+  0%   { transform: translateY(0) rotate(0deg) scaleX(1); opacity: 1; }
+  12%  { transform: translateY(-10px) rotate(-4deg) scaleX(1.04); opacity: 1; }
+  100% { transform: translateY(-300px) rotate(-28deg) scaleX(0.9); opacity: 0; }
 }
 @keyframes tearBotFly {
   0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
-  20%  { transform: translateY(8px) rotate(1deg); opacity: 1; }
-  100% { transform: translateY(180px) rotate(12deg); opacity: 0; }
+  12%  { transform: translateY(10px) rotate(3deg); opacity: 1; }
+  100% { transform: translateY(240px) rotate(20deg); opacity: 0; }
 }
 
 .pack-wrap.torn .pack-body { display: none; }
@@ -208,12 +214,12 @@
 .flip-card {
   width: 148px;
   height: 228px;
-  perspective: 900px;
   cursor: pointer;
   opacity: 0;
   transform: translateY(-60px) scale(.9);
   transition: opacity .45s ease, transform .45s ease;
   position: relative;
+  overflow: hidden;
 }
 
 .flip-card::after {
@@ -239,31 +245,33 @@
   transform: translateY(0) scale(1);
 }
 
+/* ScaleX-based flip — avoids backface-visibility browser bugs entirely */
 .flip-inner {
   width: 100%;
   height: 100%;
   position: relative;
-  transform-style: preserve-3d;
-  -webkit-transform-style: preserve-3d;
-  transition: transform .55s cubic-bezier(.4,0,.2,1);
+  transition: transform .27s cubic-bezier(.4,0,.8,1);
 }
-.flip-card.flipped .flip-inner {
-  transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg);
-}
+
+/* Phase 1: squeeze to invisible (fold in) */
+.flip-card.flip-phase1 .flip-inner { transform: scaleX(0); }
+
+/* Phase 2: start from invisible with no transition, then natural reverse plays */
+.flip-card.flip-phase2 .flip-inner { transform: scaleX(0); transition: none; }
 
 .flip-back, .flip-front {
   position: absolute;
   inset: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
   overflow: hidden;
 }
 
-/* Bold Swiss card back — diagonal design via gradients, NO transforms (transforms on
-   children break backface-visibility on mobile Safari) */
+/* The front face is hidden until the card is flipped */
+.flip-front { display: none; }
+.flip-card.flipped .flip-front { display: block; }
+.flip-card.flipped .flip-back  { display: none; }
+
+/* Bold Swiss card back */
 .flip-back {
-  /* Red triangle top-right, cobalt triangle bottom-left, black body */
   background:
     linear-gradient(225deg, var(--red, #E8000D) 0%, var(--red, #E8000D) 30%, transparent 30%),
     linear-gradient(45deg,  rgba(0,61,245,.75)   0%, rgba(0,61,245,.75)  30%, transparent 30%),
@@ -275,7 +283,6 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  overflow: hidden;
 }
 .flip-back-logo {
   font-family: 'Barlow Condensed', sans-serif;
@@ -303,7 +310,7 @@
 }
 
 /* Pulse on unflipped cards */
-.flip-card:not(.flipped) .flip-back {
+.flip-card:not(.flipped):not(.flip-phase1) .flip-back {
   animation: cardPulse 2s ease-in-out infinite;
 }
 @keyframes cardPulse {
@@ -311,7 +318,6 @@
   50%       { box-shadow: 6px 6px 0 var(--red, #E8000D); }
 }
 
-.flip-front { transform: rotateY(180deg); }
 .flip-front .sticker-card {
   width: 100%;
   height: 100%;

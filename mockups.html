@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Mockups</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;800&family=Barlow+Condensed:wght@400;700;900&family=Nunito:wght@400;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #111; font-family: sans-serif; }
+
+/* LABELS */
+.label {
+  text-align: center;
+  padding: 28px 0 16px;
+  color: #777;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+.label strong { display: block; color: #fff; font-size: 18px; letter-spacing: 1px; margin-bottom: 4px; }
+
+/* ═══════════════════════════════════════
+   OPTION A — DARK SPORT / STADIUM NIGHT
+   ═══════════════════════════════════════ */
+.a-wrap {
+  background: #0A0A0F;
+  padding: 32px 28px 40px;
+  position: relative;
+  overflow: hidden;
+}
+/* stadium glow */
+.a-wrap::before {
+  content: '';
+  position: absolute;
+  top: -120px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 300px;
+  background: radial-gradient(ellipse, rgba(0,200,255,.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.a-hero {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.a-eyebrow {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  letter-spacing: 5px;
+  color: #00CCFF;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.a-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 56px;
+  font-weight: 800;
+  color: #fff;
+  line-height: .95;
+}
+.a-title span {
+  background: linear-gradient(90deg, #00CCFF, #FF2D9B);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* stats row */
+.a-stats {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.a-stat {
+  flex: 1;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 12px;
+  padding: 14px 12px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+.a-stat-n {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: #00CCFF;
+}
+.a-stat-l {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9px;
+  color: rgba(255,255,255,.35);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* progress */
+.a-bar-wrap {
+  background: rgba(255,255,255,.06);
+  border-radius: 99px;
+  height: 6px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.a-bar-fill {
+  height: 100%;
+  width: 42%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #00CCFF, #FF2D9B);
+  box-shadow: 0 0 12px #00CCFF88;
+}
+
+/* cards */
+.a-cards { display: flex; gap: 10px; }
+.a-card {
+  flex: 1;
+  background: #14141E;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.07);
+  position: relative;
+}
+.a-card-header {
+  padding: 6px 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.a-card.brazil .a-card-header { background: rgba(0,204,255,.12); color: #00CCFF; }
+.a-card.france .a-card-header { background: rgba(255,45,155,.12); color: #FF2D9B; }
+.a-card.missing .a-card-header { background: rgba(255,255,255,.04); color: rgba(255,255,255,.2); }
+.a-card-photo {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: #1E1E2E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.a-card.brazil .a-card-photo { background: linear-gradient(160deg, #0A2A3A 0%, #14141E 100%); }
+.a-card.france .a-card-photo { background: linear-gradient(160deg, #2A0A2A 0%, #14141E 100%); }
+.a-card.missing .a-card-photo { background: #111118; }
+.a-photo-placeholder {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.06);
+  border: 1.5px solid rgba(255,255,255,.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255,255,255,.25);
+}
+.a-card.brazil .a-photo-placeholder { border-color: rgba(0,204,255,.3); color: rgba(0,204,255,.5); }
+.a-card.france .a-photo-placeholder { border-color: rgba(255,45,155,.3); color: rgba(255,45,155,.5); }
+.a-card-info {
+  padding: 8px 10px;
+  border-top: 1px solid rgba(255,255,255,.05);
+}
+.a-card-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 3px;
+}
+.a-card.missing .a-card-name { color: rgba(255,255,255,.15); }
+.a-card-pos {
+  font-size: 8px;
+  color: rgba(255,255,255,.3);
+  letter-spacing: 1px;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* rare glow border */
+.a-card.rare {
+  border: 1px solid transparent;
+  background: linear-gradient(#14141E, #14141E) padding-box,
+              linear-gradient(135deg, #00CCFF, #FF2D9B) border-box;
+  box-shadow: 0 0 20px rgba(0,204,255,.2), 0 0 40px rgba(255,45,155,.1);
+}
+
+
+/* ═══════════════════════════════════════
+   OPTION B — BOLD PRIMARY / SWISS
+   ═══════════════════════════════════════ */
+.b-wrap {
+  background: #F5F5F5;
+  padding: 32px 28px 40px;
+}
+
+.b-hero {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin-bottom: 28px;
+  border-bottom: 4px solid #000;
+  padding-bottom: 20px;
+}
+.b-flag-block {
+  background: #E8000D;
+  color: #fff;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 56px;
+  font-weight: 900;
+  line-height: 1;
+  padding: 10px 16px 8px;
+  letter-spacing: -1px;
+  flex-shrink: 0;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+.b-title-block {
+  padding: 8px 16px;
+  flex: 1;
+}
+.b-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 52px;
+  font-weight: 900;
+  color: #000;
+  line-height: .9;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+}
+.b-sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #888;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+/* stats */
+.b-stats {
+  display: flex;
+  gap: 0;
+  margin-bottom: 16px;
+  border: 3px solid #000;
+}
+.b-stat {
+  flex: 1;
+  padding: 12px 14px;
+  border-right: 2px solid #000;
+  text-align: left;
+}
+.b-stat:last-child { border-right: none; }
+.b-stat-n {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 36px;
+  font-weight: 900;
+  color: #000;
+  line-height: 1;
+}
+.b-stat-n.red { color: #E8000D; }
+.b-stat-n.blue { color: #003DF5; }
+.b-stat-l {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  color: #999;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* progress */
+.b-bar-wrap {
+  height: 14px;
+  background: #E0E0E0;
+  margin-bottom: 24px;
+  position: relative;
+}
+.b-bar-fill {
+  height: 100%;
+  width: 42%;
+  background: #E8000D;
+}
+.b-bar-pct {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: #999;
+  letter-spacing: 1px;
+}
+
+/* cards */
+.b-cards { display: flex; gap: 8px; }
+.b-card {
+  flex: 1;
+  background: #fff;
+  border: 2.5px solid #000;
+  position: relative;
+}
+.b-card-band {
+  height: 10px;
+}
+.b-card.brazil .b-card-band { background: #E8000D; }
+.b-card.france .b-card-band { background: #003DF5; }
+.b-card.missing .b-card-band { background: #E0E0E0; }
+.b-card-photo {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: #F0F0F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.b-card.missing .b-card-photo {
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 6px,
+    rgba(0,0,0,.07) 6px,
+    rgba(0,0,0,.07) 7px
+  );
+}
+.b-photo-placeholder {
+  width: 40px; height: 40px;
+  background: #DDD;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  color: #999;
+}
+.b-card.brazil .b-photo-placeholder { background: rgba(232,0,13,.12); color: #E8000D; }
+.b-card.france .b-photo-placeholder { background: rgba(0,61,245,.1); color: #003DF5; }
+.b-card-info {
+  padding: 6px 8px;
+  border-top: 2px solid #000;
+}
+.b-card-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 900;
+  color: #000;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: .5px;
+}
+.b-card.missing .b-card-name { color: #CCC; }
+.b-card-pos {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  color: #999;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.b-card.rare {
+  border-color: #E8000D;
+}
+.b-card.rare .b-card-name { color: #E8000D; }
+
+
+/* ═══════════════════════════════════════
+   OPTION C — GRADIENT BENTO / DOPAMINE
+   ═══════════════════════════════════════ */
+.c-wrap {
+  background: #160D2B;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(100,40,200,.3) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 20%, rgba(20,180,160,.2) 0%, transparent 50%);
+  padding: 32px 28px 40px;
+}
+
+.c-hero {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.c-eyebrow {
+  display: inline-block;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 99px;
+  padding: 4px 14px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  color: rgba(255,255,255,.6);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.c-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 52px;
+  font-weight: 800;
+  color: #fff;
+  line-height: .95;
+}
+.c-title span {
+  background: linear-gradient(90deg, #A78BFA, #34D399);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* bento stats */
+.c-bento {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.c-tile {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 16px;
+  padding: 16px 14px;
+  backdrop-filter: blur(10px);
+}
+.c-tile-n {
+  font-family: 'Syne', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+.c-tile.purple .c-tile-n { color: #A78BFA; }
+.c-tile.teal .c-tile-n { color: #34D399; }
+.c-tile.pink .c-tile-n { color: #F472B6; }
+.c-tile-l {
+  font-family: 'Nunito', sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  color: rgba(255,255,255,.35);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* arc progress (fake SVG) */
+.c-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+  background: rgba(255,255,255,.05);
+  border-radius: 16px;
+  padding: 14px 18px;
+  border: 1px solid rgba(255,255,255,.07);
+}
+.c-arc {
+  flex-shrink: 0;
+}
+.c-bar-info { flex: 1; }
+.c-bar-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.c-bar-track {
+  height: 8px;
+  background: rgba(255,255,255,.08);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+.c-bar-fill {
+  height: 100%;
+  width: 42%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #A78BFA, #34D399);
+}
+.c-bar-sub {
+  font-family: 'Nunito', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  color: rgba(255,255,255,.3);
+  letter-spacing: 1px;
+}
+
+/* cards */
+.c-cards { display: flex; gap: 10px; }
+.c-card {
+  flex: 1;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08);
+  background: #1E1535;
+}
+.c-card-header {
+  padding: 12px 10px 30px;
+  position: relative;
+}
+.c-card.brazil .c-card-header { background: linear-gradient(135deg, #1E4D2B, #0D3320); }
+.c-card.france .c-card-header { background: linear-gradient(135deg, #1B2A6B, #0D1A44); }
+.c-card.missing .c-card-header { background: rgba(255,255,255,.03); }
+.c-card-flag {
+  font-size: 20px;
+  display: block;
+  margin-bottom: 2px;
+}
+.c-card-team {
+  font-family: 'Nunito', sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.6);
+}
+.c-card-photo {
+  margin: -20px 12px 0;
+  position: relative;
+  z-index: 1;
+  width: calc(100% - 24px);
+  aspect-ratio: 1;
+  border-radius: 12px;
+  background: rgba(255,255,255,.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,.08);
+}
+.c-card.brazil .c-card-photo { background: rgba(52,211,153,.08); border-color: rgba(52,211,153,.2); }
+.c-card.france .c-card-photo { background: rgba(167,139,250,.08); border-color: rgba(167,139,250,.2); }
+.c-photo-placeholder {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: rgba(255,255,255,.2);
+}
+.c-card.brazil .c-photo-placeholder { color: rgba(52,211,153,.5); }
+.c-card.france .c-photo-placeholder { color: rgba(167,139,250,.5); }
+.c-card-info {
+  padding: 10px 12px 12px;
+}
+.c-card-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 3px;
+}
+.c-card.missing .c-card-name { color: rgba(255,255,255,.15); }
+.c-card-pos {
+  display: inline-block;
+  font-family: 'Nunito', sans-serif;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 2px 7px;
+  border-radius: 99px;
+  text-transform: uppercase;
+}
+.c-card.brazil .c-card-pos { background: rgba(52,211,153,.15); color: #34D399; }
+.c-card.france .c-card-pos { background: rgba(167,139,250,.15); color: #A78BFA; }
+.c-card.missing .c-card-pos { background: rgba(255,255,255,.04); color: rgba(255,255,255,.15); }
+
+.c-card.rare {
+  border: 1px solid rgba(167,139,250,.4);
+  box-shadow: 0 0 24px rgba(167,139,250,.15), 0 0 48px rgba(52,211,153,.08);
+}
+
+/* DIVIDERS */
+hr { border: none; border-top: 1px solid #222; margin: 8px 0; }
+</style>
+</head>
+<body>
+
+<div class="label"><strong>A — Dark Sport</strong>Stadium night · neon glow · Space Grotesk</div>
+<div class="a-wrap">
+  <div class="a-hero">
+    <div class="a-eyebrow">Official Collection</div>
+    <div class="a-title">PANINI<br><span>WC 2026</span></div>
+  </div>
+  <div class="a-stats">
+    <div class="a-stat"><div class="a-stat-n">87</div><div class="a-stat-l">Collected</div></div>
+    <div class="a-stat"><div class="a-stat-n">121</div><div class="a-stat-l">Missing</div></div>
+    <div class="a-stat"><div class="a-stat-n">12</div><div class="a-stat-l">Dupes</div></div>
+    <div class="a-stat"><div class="a-stat-n">14</div><div class="a-stat-l">Packs</div></div>
+  </div>
+  <div class="a-bar-wrap"><div class="a-bar-fill"></div></div>
+  <div class="a-cards">
+    <div class="a-card brazil rare">
+      <div class="a-card-header">🇧🇷 Brazil · #7</div>
+      <div class="a-card-photo"><div class="a-photo-placeholder">VJ</div></div>
+      <div class="a-card-info"><div class="a-card-name">Vinicius Jr.</div><div class="a-card-pos">FWD · 24</div></div>
+    </div>
+    <div class="a-card france">
+      <div class="a-card-header">🇫🇷 France · #10</div>
+      <div class="a-card-photo"><div class="a-photo-placeholder">KM</div></div>
+      <div class="a-card-info"><div class="a-card-name">Mbappé</div><div class="a-card-pos">FWD · 26</div></div>
+    </div>
+    <div class="a-card missing">
+      <div class="a-card-header">🇩🇪 Germany · #3</div>
+      <div class="a-card-photo"><div class="a-photo-placeholder">?</div></div>
+      <div class="a-card-info"><div class="a-card-name">Missing</div><div class="a-card-pos">— · —</div></div>
+    </div>
+    <div class="a-card france">
+      <div class="a-card-header">🇫🇷 France · #1</div>
+      <div class="a-card-photo"><div class="a-photo-placeholder">MF</div></div>
+      <div class="a-card-info"><div class="a-card-name">Maignan</div><div class="a-card-pos">GK · 29</div></div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<div class="label"><strong>B — Swiss Brutalist</strong>Poster bold · pure primary · Barlow Condensed</div>
+<div class="b-wrap">
+  <div class="b-hero">
+    <div class="b-flag-block">⚽</div>
+    <div class="b-title-block">
+      <div class="b-title">Panini<br>WC 2026</div>
+      <div class="b-sub">Official Sticker Album</div>
+    </div>
+  </div>
+  <div class="b-stats">
+    <div class="b-stat"><div class="b-stat-n red">87</div><div class="b-stat-l">Collected</div></div>
+    <div class="b-stat"><div class="b-stat-n">121</div><div class="b-stat-l">Missing</div></div>
+    <div class="b-stat"><div class="b-stat-n blue">14</div><div class="b-stat-l">Packs</div></div>
+  </div>
+  <div class="b-bar-wrap"><div class="b-bar-fill"></div><div class="b-bar-pct">42%</div></div>
+  <div class="b-cards">
+    <div class="b-card brazil rare">
+      <div class="b-card-band"></div>
+      <div class="b-card-photo"><div class="b-photo-placeholder">VJ</div></div>
+      <div class="b-card-info"><div class="b-card-name">Vinicius Jr.</div><div class="b-card-pos">FWD · Brazil</div></div>
+    </div>
+    <div class="b-card france">
+      <div class="b-card-band"></div>
+      <div class="b-card-photo"><div class="b-photo-placeholder">KM</div></div>
+      <div class="b-card-info"><div class="b-card-name">Mbappé</div><div class="b-card-pos">FWD · France</div></div>
+    </div>
+    <div class="b-card missing">
+      <div class="b-card-band"></div>
+      <div class="b-card-photo"><div class="b-photo-placeholder">?</div></div>
+      <div class="b-card-info"><div class="b-card-name">Missing</div><div class="b-card-pos">— · Germany</div></div>
+    </div>
+    <div class="b-card france">
+      <div class="b-card-band"></div>
+      <div class="b-card-photo"><div class="b-photo-placeholder">MF</div></div>
+      <div class="b-card-info"><div class="b-card-name">Maignan</div><div class="b-card-pos">GK · France</div></div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<div class="label"><strong>C — Gradient Bento</strong>Dopamine UI · mesh gradient · Syne + Nunito</div>
+<div class="c-wrap">
+  <div class="c-hero">
+    <div class="c-eyebrow">✦ Your Collection</div>
+    <div class="c-title">Panini<br><span>WC 2026</span></div>
+  </div>
+  <div class="c-bento">
+    <div class="c-tile purple"><div class="c-tile-n">87</div><div class="c-tile-l">Collected</div></div>
+    <div class="c-tile teal"><div class="c-tile-n">42%</div><div class="c-tile-l">Complete</div></div>
+    <div class="c-tile pink"><div class="c-tile-n">14</div><div class="c-tile-l">Packs</div></div>
+  </div>
+  <div class="c-progress-row">
+    <svg class="c-arc" width="56" height="56" viewBox="0 0 56 56">
+      <circle cx="28" cy="28" r="22" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="5"/>
+      <circle cx="28" cy="28" r="22" fill="none" stroke="url(#pg)" stroke-width="5"
+        stroke-dasharray="138" stroke-dashoffset="80" stroke-linecap="round"
+        transform="rotate(-90 28 28)"/>
+      <defs>
+        <linearGradient id="pg" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#A78BFA"/>
+          <stop offset="100%" stop-color="#34D399"/>
+        </linearGradient>
+      </defs>
+      <text x="28" y="33" text-anchor="middle" font-family="Syne,sans-serif" font-size="10" font-weight="800" fill="#fff">42%</text>
+    </svg>
+    <div class="c-bar-info">
+      <div class="c-bar-title">87 / 208 stickers</div>
+      <div class="c-bar-track"><div class="c-bar-fill"></div></div>
+      <div class="c-bar-sub">121 still missing · 12 duplicates</div>
+    </div>
+  </div>
+  <div class="c-cards">
+    <div class="c-card brazil rare">
+      <div class="c-card-header"><span class="c-card-flag">🇧🇷</span><span class="c-card-team">Brazil</span></div>
+      <div class="c-card-photo"><div class="c-photo-placeholder">VJ</div></div>
+      <div class="c-card-info"><div class="c-card-name">Vinicius Jr.</div><span class="c-card-pos">FWD</span></div>
+    </div>
+    <div class="c-card france">
+      <div class="c-card-header"><span class="c-card-flag">🇫🇷</span><span class="c-card-team">France</span></div>
+      <div class="c-card-photo"><div class="c-photo-placeholder">KM</div></div>
+      <div class="c-card-info"><div class="c-card-name">Mbappé</div><span class="c-card-pos">FWD</span></div>
+    </div>
+    <div class="c-card missing">
+      <div class="c-card-header"><span class="c-card-flag">🇩🇪</span><span class="c-card-team">Germany</span></div>
+      <div class="c-card-photo"><div class="c-photo-placeholder">?</div></div>
+      <div class="c-card-info"><div class="c-card-name">Missing</div><span class="c-card-pos">—</span></div>
+    </div>
+    <div class="c-card france">
+      <div class="c-card-header"><span class="c-card-flag">🇫🇷</span><span class="c-card-team">France</span></div>
+      <div class="c-card-photo"><div class="c-photo-placeholder">MF</div></div>
+      <div class="c-card-info"><div class="c-card-name">Maignan</div><span class="c-card-pos">GK</span></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

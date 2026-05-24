@@ -41,7 +41,12 @@ function stickerCardHTML(player, owned, reveal = false, pulledAsRare = false) {
     <img class="card-photo" src="${photoUrl(player.id)}"
          alt="${fullName}"
          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-    <div class="card-initials" style="background:${team.color};color:#fff;display:none">${ini}</div>
+    <div class="card-initials" style="background:${team.color};display:none">
+      <svg class="card-silhouette" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="36" r="24" fill="white"/>
+        <path d="M8 118 Q8 72 50 72 Q92 72 92 118Z" fill="white"/>
+      </svg>
+    </div>
   ` : `
     <div class="card-initials-q">?</div>
   `;
@@ -321,16 +326,26 @@ function openSlotPicker(slotId) {
   const slot = FORMATION_431.find(s => s.id === slotId);
   const col  = getCollection();
 
-  // Collect eligible owned players, sorted by name
+  // Show all collected outfield players for any outfield slot; GK-only for GK
   const eligible = ALL_PLAYERS
-    .filter(p => slot.accepts.includes(p.position) && (col[p.id] || 0) > 0)
-    .sort((a, b) => (a.lastName || a.firstName).localeCompare(b.lastName || b.firstName));
+    .filter(p => {
+      if ((col[p.id] || 0) === 0) return false;
+      if (slot.id === 'gk') return p.position === 'GK';
+      return p.position !== 'GK';
+    })
+    .sort((a, b) => {
+      // Natural-position matches float to top
+      const aMatch = slot.accepts.includes(a.position) ? 0 : 1;
+      const bMatch = slot.accepts.includes(b.position) ? 0 : 1;
+      if (aMatch !== bMatch) return aMatch - bMatch;
+      return (a.lastName || a.firstName).localeCompare(b.lastName || b.firstName);
+    });
 
   document.getElementById('slotPickerTitle').textContent = `Select ${slot.label}`;
 
   const list = document.getElementById('slotPickerList');
   if (!eligible.length) {
-    list.innerHTML = `<div class="picker-empty">No collected ${slot.accepts.join('/')} in your album yet.</div>`;
+    list.innerHTML = `<div class="picker-empty">No collected ${slot.id === 'gk' ? 'GK' : 'outfield'} players in your album yet.</div>`;
   } else {
     list.innerHTML = eligible.map(p => {
       const team = TEAMS[p.teamId];
@@ -446,7 +461,7 @@ function handleOpenPack() {
       openBtn.style.display  = 'none';
       showPackCards();
     }, 720);
-  }, 700);
+  }, 750);
 }
 
 function showPackCards() {
@@ -475,14 +490,26 @@ function showPackCards() {
 
 function flipCard(i) {
   const card = document.getElementById(`fc${i}`);
-  if (!card || card.classList.contains('flipped')) return;
-  card.classList.add('flipped');
-  _flippedCount++;
-  if (_flippedCount === _currentPack.length) {
-    setTimeout(() => {
-      document.getElementById('packAddWrap').style.display = 'flex';
-    }, 500);
-  }
+  if (!card || card.classList.contains('flipped') || card.classList.contains('flip-phase1')) return;
+
+  // Phase 1: squeeze to invisible (27ms transition defined in CSS)
+  card.classList.add('flip-phase1');
+
+  setTimeout(() => {
+    // Midpoint: swap faces, reset to scaleX(0) with no transition
+    card.classList.remove('flip-phase1');
+    card.classList.add('flipped', 'flip-phase2');
+
+    // Phase 2: one rAF later, remove phase2 so CSS transition plays scaleX 0→1
+    requestAnimationFrame(() => requestAnimationFrame(() => card.classList.remove('flip-phase2')));
+
+    _flippedCount++;
+    if (_flippedCount === _currentPack.length) {
+      setTimeout(() => {
+        document.getElementById('packAddWrap').style.display = 'flex';
+      }, 500);
+    }
+  }, 290);
 }
 
 function handleAddToCollection() {
