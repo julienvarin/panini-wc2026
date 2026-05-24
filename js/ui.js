@@ -74,7 +74,10 @@ function stickerCardHTML(player, owned, reveal = false, pulledAsRare = false) {
           ${rareBadge}
         ` : ''}
       </div>
-      <span class="card-sticker-num">${player.id}</span>
+      ${show ? `<div class="card-gauge" style="--gauge-pct:${((player.rating || 50) - 50) / 49 * 100}%">
+        <div class="card-gauge-fill"></div>
+        <span class="card-gauge-num">${player.rating || '—'}</span>
+      </div>` : ''}
     </div>`;
 }
 
@@ -334,11 +337,14 @@ function openSlotPicker(slotId) {
       return p.position !== 'GK';
     })
     .sort((a, b) => {
-      // Natural-position matches float to top
-      const aMatch = slot.accepts.includes(a.position) ? 0 : 1;
-      const bMatch = slot.accepts.includes(b.position) ? 0 : 1;
-      if (aMatch !== bMatch) return aMatch - bMatch;
-      return (a.lastName || a.firstName).localeCompare(b.lastName || b.firstName);
+      // Primary position (index 0) first, then other accepted, then rest
+      const aIdx = slot.accepts.indexOf(a.position);
+      const bIdx = slot.accepts.indexOf(b.position);
+      const aRank = aIdx === -1 ? 99 : aIdx;
+      const bRank = bIdx === -1 ? 99 : bIdx;
+      if (aRank !== bRank) return aRank - bRank;
+      // Within same relevance tier, highest rating first
+      return (b.rating || 0) - (a.rating || 0);
     });
 
   document.getElementById('slotPickerTitle').textContent = `Select ${slot.label}`;
