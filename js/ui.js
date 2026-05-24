@@ -12,6 +12,16 @@ function initials(p) {
 
 const POS_LABEL = { GK:'GK', CB:'CB', RB:'RB', LB:'LB', CDM:'CDM', CM:'CM', CAM:'CAM', RW:'RW', LW:'LW', ST:'ST' };
 
+function ratingColor(r) {
+  if (!r) return '#999';
+  if (r < 60) return '#4CAF50';  // green
+  if (r < 70) return '#8BC34A';  // light green
+  if (r < 80) return '#FFC107';  // yellow
+  if (r < 88) return '#FF9800';  // orange
+  if (r < 94) return '#F44336';  // red
+  return '#9C27B0';              // purple
+}
+
 // Circle flag image — flagcdn only accepts: 20, 40, 80, 160, 320
 function flagCircle(teamId, size = 'md') {
   const team = TEAMS[teamId];
@@ -64,20 +74,19 @@ function stickerCardHTML(player, owned, reveal = false, pulledAsRare = false) {
         ${!show ? '<div class="missing-overlay"></div>' : ''}
       </div>
       <div class="card-info">
-        <div class="card-name">${show ? fullName.toUpperCase() : '???'}</div>
-        ${show ? `
-          <div class="card-meta">
-            <span class="card-pos">${POS_LABEL[player.position] || player.position}</span>
-            <span class="card-age">${player.age} yrs</span>
-          </div>
-          <div class="card-club">${player.club}</div>
-          ${rareBadge}
-        ` : ''}
+        ${show ? `<span class="card-rating-circle" style="background:${ratingColor(player.rating)}">${player.rating || '—'}</span>` : ''}
+        <div class="card-info-text">
+          <div class="card-name">${show ? fullName.toUpperCase() : '???'}</div>
+          ${show ? `
+            <div class="card-meta">
+              <span class="card-pos">${POS_LABEL[player.position] || player.position}</span>
+              <span class="card-age">${player.age} yrs</span>
+            </div>
+            <div class="card-club">${player.club}</div>
+            ${rareBadge}
+          ` : ''}
+        </div>
       </div>
-      ${show ? `<div class="card-gauge" style="--gauge-pct:${((player.rating || 50) - 50) / 49 * 100}%">
-        <div class="card-gauge-fill"></div>
-        <span class="card-gauge-num">${player.rating || '—'}</span>
-      </div>` : ''}
     </div>`;
 }
 

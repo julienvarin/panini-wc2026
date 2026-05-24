@@ -34,7 +34,6 @@
 }
 .sticker-card.rare .card-photo-wrap {
   background: linear-gradient(160deg, #FFFAE8 0%, #FFF5C0 100%);
-  border-bottom-color: #B8860B;
 }
 /* Travelling gold shimmer */
 .sticker-card.rare::before {
@@ -118,7 +117,6 @@
   padding-top: 85%;
   overflow: hidden;
   background: #fff;
-  border-bottom: 2px solid #0A0A0A;
 }
 .card-photo {
   position: absolute;
@@ -133,8 +131,11 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,.1) 100%);
+  border: 2px solid #0A0A0A;
   pointer-events: none;
+}
+.sticker-card.rare .card-photo-wrap::after {
+  border-color: #B8860B;
 }
 .card-initials {
   position: absolute;
@@ -163,8 +164,29 @@
 
 /* ── INFO SECTION ── */
 .card-info {
-  padding: 3px 6px 3px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 6px;
   background: #fff;
+}
+.card-rating-circle {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: #fff;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .6rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.card-info-text {
+  flex: 1;
+  min-width: 0;
   text-align: center;
 }
 .card-name {
@@ -233,44 +255,3 @@
   letter-spacing: 1.5px;
   text-transform: uppercase;
 }
-
-/* ── RATING GAUGE (right edge) ── */
-.card-gauge {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 14px;
-  background: #E8E8E8;
-  z-index: 5;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-}
-.card-gauge-fill {
-  width: 100%;
-  height: var(--gauge-pct, 0%);
-  background: #0A0A0A;
-  transition: height .3s;
-}
-.sticker-card.rare .card-gauge-fill { background: #B8860B; }
-.card-gauge-num {
-  position: absolute;
-  bottom: calc(var(--gauge-pct, 0%) - 10px);
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #0A0A0A;
-  color: #fff;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: .5rem;
-  font-weight: 900;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.sticker-card.rare .card-gauge-num { background: #B8860B; }
