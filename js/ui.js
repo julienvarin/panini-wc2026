@@ -37,6 +37,10 @@ function stickerCardHTML(player, owned, reveal = false, pulledAsRare = false) {
   const dupBadge  = count > 1 ? `<span class="dup-badge">×${count}</span>` : '';
   const rareBadge = isRare ? `<span class="card-rare-badge">★ RARE</span>` : '';
 
+  const rating = player.rating || 50;
+  const ratingTier = rating >= 95 ? 'elite' : rating >= 90 ? 'gold' : rating >= 80 ? 'silver' : rating >= 70 ? 'bronze' : '';
+  const ratingBadge = show ? `<span class="card-rating card-rating--${ratingTier}">${rating}</span>` : '';
+
   const photoHTML = show ? `
     <img class="card-photo" src="${photoUrl(player.id)}"
          alt="${fullName}"
@@ -61,6 +65,7 @@ function stickerCardHTML(player, owned, reveal = false, pulledAsRare = false) {
       </div>
       <div class="card-photo-wrap">
         ${photoHTML}
+        ${ratingBadge}
         ${!show ? '<div class="missing-overlay"></div>' : ''}
       </div>
       <div class="card-info">

@@ -229,6 +229,34 @@
   text-transform: uppercase;
 }
 
+/* ── PLAYER RATING BADGE ── */
+.card-rating {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  z-index: 2;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: .95rem;
+  line-height: 1;
+  min-width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border-radius: 2px;
+  background: rgba(255,255,255,.85);
+  color: #333;
+  border: 1.5px solid rgba(0,0,0,.2);
+  backdrop-filter: blur(2px);
+}
+.card-rating--bronze { background: rgba(205,127,50,.9);  color: #fff; border-color: #a0632a; }
+.card-rating--silver { background: rgba(192,192,192,.9); color: #333; border-color: #999; }
+.card-rating--gold   { background: rgba(255,215,0,.92);  color: #333; border-color: #c8a200; }
+.card-rating--elite  { background: #ff8c00; color: #fff; border-color: #c86400;
+                        box-shadow: 0 0 6px rgba(255,140,0,.6); }
+
 /* ── STICKER NUMBER ── */
 .card-sticker-num {
   position: absolute;
